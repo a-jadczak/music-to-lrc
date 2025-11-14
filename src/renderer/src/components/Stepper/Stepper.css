@@ -12,6 +12,7 @@
 
 .stepper-children {
   flex: 1;
+  padding: 1em 2.5em;
 }
 
 .stepper-buttons {

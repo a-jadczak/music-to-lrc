@@ -4,6 +4,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import Dropzone from './components/Dropzone/Dropzone';
 import { CssBaseline } from '@mui/material';
 import theme from './theme/theme';
+import FileTreeConfigurator from './components/FileTreeConfigurator/FileTreeConfigurator';
 
 function App(): React.JSX.Element {
   const ipcHandle = (): void => window.electron.ipcRenderer.send('ping');
@@ -13,7 +14,8 @@ function App(): React.JSX.Element {
       <CssBaseline />
       <main>
         <Stepper>
-          <Dropzone />
+          {/* <Dropzone /> */}
+          <FileTreeConfigurator />
         </Stepper>
       </main>
     </ThemeProvider>

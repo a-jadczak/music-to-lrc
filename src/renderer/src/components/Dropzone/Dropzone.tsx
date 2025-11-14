@@ -1,4 +1,3 @@
-import React from 'react';
 import './Dropzone.css';
 import Upload from '@mui/icons-material/Upload';
 import { Box } from '@mui/material';
