@@ -1,0 +1,41 @@
+import { Stepper as StepperMUI, Step, StepLabel, Button } from '@mui/material';
+import { JSX, useState } from 'react';
+import './Stepper.css';
+
+const Stepper = ({ children }: { children: React.ReactNode }): JSX.Element => {
+  const [activeStep, setActiveStep] = useState(0);
+  const steps = ['Choose Files', 'Output', 'Finish'];
+
+  return (
+    <div className="stepper-container">
+      <StepperMUI className="stepper-steps" activeStep={activeStep}>
+        {steps.map((label) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
+      </StepperMUI>
+
+      <div className="stepper-children">{children}</div>
+
+      <div className="stepper-buttons">
+        <Button
+          disabled={activeStep === 0}
+          onClick={() => setActiveStep((prev) => prev - 1)}
+          variant="contained"
+        >
+          Back
+        </Button>
+        <Button
+          disabled={activeStep === steps.length - 1}
+          onClick={() => setActiveStep((prev) => prev + 1)}
+          variant="contained"
+        >
+          Next
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+export default Stepper;
