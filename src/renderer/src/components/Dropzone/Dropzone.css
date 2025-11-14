@@ -1,0 +1,19 @@
+.dropzone-container {
+
+}
+
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: .1em dashed gray;
+
+  border-radius: .5em;
+  padding: 2em;
+  cursor: pointer;
+  transition: .35s;
+}
+
+.dropzone {
+  font-size: 1.5em;
+}
