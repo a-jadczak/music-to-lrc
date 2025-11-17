@@ -1,4 +1,10 @@
-import { Stepper as StepperMUI, Step, StepLabel, Button } from '@mui/material';
+import {
+  Stepper as StepperMUI,
+  Step,
+  StepLabel,
+  Button,
+  Box
+} from '@mui/material';
 import { JSX, useState } from 'react';
 import './Stepper.css';
 
@@ -7,7 +13,7 @@ const Stepper = ({ children }: { children: React.ReactNode }): JSX.Element => {
   const steps = ['Choose Files', 'Output', 'Finish'];
 
   return (
-    <div className="stepper-container">
+    <Box className="stepper-container">
       <StepperMUI className="stepper-steps" activeStep={activeStep}>
         {steps.map((label) => (
           <Step key={label}>
@@ -16,9 +22,9 @@ const Stepper = ({ children }: { children: React.ReactNode }): JSX.Element => {
         ))}
       </StepperMUI>
 
-      <div className="stepper-children">{children}</div>
+      <Box className="stepper-children">{children}</Box>
 
-      <div className="stepper-buttons">
+      <Box className="stepper-buttons">
         <Button
           disabled={activeStep === 0}
           onClick={() => setActiveStep((prev) => prev - 1)}
@@ -33,8 +39,8 @@ const Stepper = ({ children }: { children: React.ReactNode }): JSX.Element => {
         >
           Next
         </Button>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

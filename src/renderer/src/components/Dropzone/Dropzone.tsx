@@ -1,15 +1,15 @@
 import './Dropzone.css';
 import Upload from '@mui/icons-material/Upload';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 const Dropzone = () => {
   return (
-    <div className="dropzone-container">
+    <Box className="dropzone-container">
       <Box
         className="dropzone"
         sx={{
-          color: 'grey.700',
-          borderColor: 'grey.700',
+          color: 'text.secondary',
+          borderColor: 'text.secondary',
           '&:hover': {
             bgcolor: 'primary.light',
             color: 'white',
@@ -17,10 +17,12 @@ const Dropzone = () => {
           }
         }}
       >
-        <Upload sx={{ fontSize: '5em' }} />
-        <span>Drag and drop files or click here</span>
+        <Upload sx={{ fontSize: '3.5em' }} />
+        <Typography component={'span'}>
+          Drag and drop files or click here
+        </Typography>
       </Box>
-    </div>
+    </Box>
   );
 };
 

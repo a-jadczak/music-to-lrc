@@ -1,12 +1,17 @@
-import { Box, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
+import {
+  Box,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  Typography
+} from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
 import AudioFileIcon from '@mui/icons-material/AudioFile';
-import FileBranch from './FileBranch';
+import IconLabel from '../../components/IconLabel/IconLabel';
 import DescriptionIcon from '@mui/icons-material/Description';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import './FileTreeConfigurator.css';
 import { useState } from 'react';
-import { FILE } from 'dns';
 
 const FileTreeConfigurator = () => {
   const [placeInFolders, setPlaceInFolders] = useState(true);
@@ -23,7 +28,9 @@ const FileTreeConfigurator = () => {
 
   return (
     <>
-      <h2>Output Settings:</h2>
+      <Typography component="h2" variant="h4">
+        Output Settings
+      </Typography>
       <FormGroup>
         <FormControlLabel
           control={
@@ -44,7 +51,7 @@ const FileTreeConfigurator = () => {
           label="Include source files"
         />
 
-        <div className="input-group">
+        <Box className="input-group">
           <Box
             className="icon"
             sx={{
@@ -63,30 +70,24 @@ const FileTreeConfigurator = () => {
             type="text"
             placeholder="Enter destination path"
           />
-        </div>
-        <div className="file-tree-result">
+        </Box>
+        <Box className="file-tree-result">
           {arr.map((e) => {
             return (
               <>
                 {placeInFolders && (
-                  <FileBranch text={'Folder'} children={<FolderIcon />} />
+                  <IconLabel text={'Folder'} children={<FolderIcon />} />
                 )}
-                <div className={`${placeInFolders && 'folder'}`}>
-                  <FileBranch
-                    text={`${e}.lrc`}
-                    children={<DescriptionIcon />}
-                  />
+                <Box className={`${placeInFolders && 'folder'}`}>
+                  <IconLabel text={`${e}.lrc`} children={<DescriptionIcon />} />
                   {includeSourceFiles && (
-                    <FileBranch
-                      text={`${e}.mp3`}
-                      children={<AudioFileIcon />}
-                    />
+                    <IconLabel text={`${e}.mp3`} children={<AudioFileIcon />} />
                   )}
-                </div>
+                </Box>
               </>
             );
           })}
-        </div>
+        </Box>
       </FormGroup>
     </>
   );
