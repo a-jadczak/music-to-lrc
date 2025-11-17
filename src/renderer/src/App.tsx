@@ -6,6 +6,7 @@ import { CssBaseline } from '@mui/material';
 import theme from './theme/theme';
 import FileTreeConfigurator from './pages/FileTreeConfigurator/FileTreeConfigurator';
 import ModelSelectorInstaller from './pages/ModelSelectorInstaller/ModelSelectorInstaller';
+import TranslationProgress from './pages/TranslationProgress/TranslationProgress';
 
 function App(): React.JSX.Element {
   const ipcHandle = (): void => window.electron.ipcRenderer.send('ping');
@@ -16,8 +17,9 @@ function App(): React.JSX.Element {
       <main>
         <Stepper>
           {/* <Dropzone /> */}
-          <FileTreeConfigurator />
+          {/* <FileTreeConfigurator /> */}
           {/* <ModelSelectorInstaller /> */}
+          <TranslationProgress />
         </Stepper>
       </main>
     </ThemeProvider>

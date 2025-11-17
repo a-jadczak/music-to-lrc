@@ -1,0 +1,18 @@
+.output-box {
+  position: relative;
+  border: .1em solid white;
+  height: 60vh;
+  overflow: hidden;
+  padding: .5em;
+  border-radius: .5em;
+}
+
+.output-shadow-box {
+  inset: 0;
+  box-shadow: inset 0px 5em 7em 1.5em rgba(0, 0, 0, 0.7);
+  position: absolute; 
+}
+
+.output-box span {
+  display: block;
+}
