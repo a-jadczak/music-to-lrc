@@ -1,7 +1,12 @@
 import { Box, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
+import AudioFileIcon from '@mui/icons-material/AudioFile';
+import FileBranch from './FileBranch';
+import DescriptionIcon from '@mui/icons-material/Description';
+import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import './FileTreeConfigurator.css';
 import { useState } from 'react';
+import { FILE } from 'dns';
 
 const FileTreeConfigurator = () => {
   const [placeInFolders, setPlaceInFolders] = useState(true);
@@ -48,7 +53,7 @@ const FileTreeConfigurator = () => {
               }
             }}
           >
-            <FolderIcon
+            <CreateNewFolderIcon
               sx={{ transition: 'transform 0.35s ease' }}
               fontSize="large"
             />
@@ -64,14 +69,19 @@ const FileTreeConfigurator = () => {
             return (
               <>
                 {placeInFolders && (
-                  <Box sx={{ display: 'flex', gap: 0.5 }}>
-                    <FolderIcon />
-                    <span>Folder</span>
-                  </Box>
+                  <FileBranch text={'Folder'} children={<FolderIcon />} />
                 )}
                 <div className={`${placeInFolders && 'folder'}`}>
-                  <div>{e}</div>
-                  {includeSourceFiles && <div>S-{e}</div>}
+                  <FileBranch
+                    text={`${e}.lrc`}
+                    children={<DescriptionIcon />}
+                  />
+                  {includeSourceFiles && (
+                    <FileBranch
+                      text={`${e}.mp3`}
+                      children={<AudioFileIcon />}
+                    />
+                  )}
                 </div>
               </>
             );
