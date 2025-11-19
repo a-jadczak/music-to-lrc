@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import React from 'react';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 
@@ -16,7 +16,7 @@ const CompletionPage = () => {
       }}
     >
       <TaskAltIcon color="success" fontSize="large" sx={{ fontSize: '8em' }} />
-      <Typography component="h2" variant="h2">
+      <Typography component="h2" variant="h3">
         Done!
       </Typography>
       <Typography
@@ -26,6 +26,9 @@ const CompletionPage = () => {
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi earum
         quod, sunt delectus culpa consectetur aperiam ex aliquam quam obcaecati!
       </Typography>
+      <Button variant="contained" sx={{ mt: '2em' }}>
+        Start over
+      </Button>
     </Box>
   );
 };
