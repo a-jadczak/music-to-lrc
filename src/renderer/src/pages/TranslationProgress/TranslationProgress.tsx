@@ -44,8 +44,6 @@ const TranslationProgress = () => {
           <span>[hh:mm:ss] Hello</span>
           <span>[hh:mm:ss] What's</span>
           <span>[hh:mm:ss] Going</span>
-          <span>[hh:mm:ss] On</span>
-          <span>[hh:mm:ss] On</span>
         </Box>
       </Box>
     </>

@@ -19,16 +19,17 @@ const ModelSelectorInstaller = () => {
         Select Model
       </Typography>
       <Typography component="p" sx={{ color: 'text.secondary' }}>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum sit
-        facilis eos enim soluta fugiat. Voluptates obcaecati minima
-        exercitationem fugit!
+        A larger model size usually means that the translation will take more
+        time to complete. However, the benefit is that the results are generally
+        more accurate. Bigger models can analyze more details and understand the
+        context better, which leads to higher-quality translations.
       </Typography>
       <FormControl sx={{ marginTop: '1em', width: '100%' }}>
         <InputLabel id="model-label">Model</InputLabel>
         <Select labelId="model-label" label="Model">
-          <MenuItem value={10}>small</MenuItem>
-          <MenuItem value={20}>medium</MenuItem>
-          <MenuItem value={30}>large</MenuItem>
+          <MenuItem value={1}>small</MenuItem>
+          <MenuItem value={2}>medium</MenuItem>
+          <MenuItem value={3}>large</MenuItem>
         </Select>
       </FormControl>
 

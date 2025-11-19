@@ -3,8 +3,14 @@ import Upload from '@mui/icons-material/Upload';
 import { Box, Typography } from '@mui/material';
 
 const Dropzone = () => {
+  const uploadFiles = async () => {
+    const files = await window.electronAPI.uploadFiles();
+
+    console.log(files);
+  };
+
   return (
-    <Box className="dropzone-container">
+    <Box className="dropzone-container" onClick={uploadFiles}>
       <Box
         className="dropzone"
         sx={{

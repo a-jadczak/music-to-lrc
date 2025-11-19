@@ -14,6 +14,8 @@ import './FileTreeConfigurator.css';
 import { useState } from 'react';
 
 const FileTreeConfigurator = () => {
+  const [path, setPath] = useState('');
+
   const [placeInFolders, setPlaceInFolders] = useState(true);
   const [includeSourceFiles, setIncludeSourceFiles] = useState(true);
 
@@ -25,6 +27,14 @@ const FileTreeConfigurator = () => {
     'John 4',
     'John 5'
   ]);
+
+  const setDirectory = async () => {
+    const dir = await window.electronAPI.openDirectory();
+    console.log(dir);
+    if (dir.canceled) return;
+
+    setPath(dir.filePaths[0]);
+  };
 
   return (
     <>
@@ -63,10 +73,12 @@ const FileTreeConfigurator = () => {
             <CreateNewFolderIcon
               sx={{ transition: 'transform 0.35s ease' }}
               fontSize="large"
+              onClick={setDirectory}
             />
           </Box>
           <input
             className="path-input"
+            value={path}
             type="text"
             placeholder="Enter destination path"
           />

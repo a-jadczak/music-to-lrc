@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Stepper from './components/Stepper/Stepper';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
@@ -10,7 +9,6 @@ import CompletionPage from './pages/CompletionPage/CompletionPage';
 import UploadPage from './pages/UploadPage/UploadPage';
 
 function App(): React.JSX.Element {
-  const ipcHandle = (): void => window.electron.ipcRenderer.send('ping');
   const steps = new Map<string, React.ReactNode>([
     ['Upload', <UploadPage />],
     ['Output', <FileTreeConfigurator />],

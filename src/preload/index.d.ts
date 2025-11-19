@@ -1,8 +1,15 @@
-import { ElectronAPI } from '@electron-toolkit/preload'
-
 declare global {
   interface Window {
-    electron: ElectronAPI
-    api: unknown
+    electronAPI: ElectronAPI;
   }
+}
+
+interface OpenDialogResult {
+  canceled: boolean;
+  filePaths: string[];
+}
+
+export interface ElectronAPI {
+  uploadFiles: () => Promise<OpenDialogResult>;
+  openDirectory: () => Promise<OpenDialogResult>;
 }
