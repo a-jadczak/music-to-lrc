@@ -5,24 +5,25 @@ import {
   Button,
   Box
 } from '@mui/material';
-import { JSX, useState } from 'react';
+import { JSX, ReactNode, useState } from 'react';
 import './Stepper.css';
 
-const Stepper = ({ children }: { children: React.ReactNode }): JSX.Element => {
+const Stepper = ({ steps }: { steps: Map<string, ReactNode> }): JSX.Element => {
   const [activeStep, setActiveStep] = useState(0);
-  const steps = ['Choose Files', 'Output', 'Finish'];
 
   return (
     <Box className="stepper-container">
       <StepperMUI className="stepper-steps" activeStep={activeStep}>
-        {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
+        {Array.from(steps.keys()).map((key) => (
+          <Step key={key}>
+            <StepLabel>{key}</StepLabel>
           </Step>
         ))}
       </StepperMUI>
 
-      <Box className="stepper-children">{children}</Box>
+      <Box className="stepper-children">
+        {Array.from(steps.values())[activeStep]}
+      </Box>
 
       <Box className="stepper-buttons">
         <Button
@@ -33,7 +34,7 @@ const Stepper = ({ children }: { children: React.ReactNode }): JSX.Element => {
           Back
         </Button>
         <Button
-          disabled={activeStep === steps.length - 1}
+          disabled={activeStep === steps.size - 1}
           onClick={() => setActiveStep((prev) => prev + 1)}
           variant="contained"
         >

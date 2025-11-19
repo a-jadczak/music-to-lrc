@@ -11,18 +11,19 @@ import UploadPage from './pages/UploadPage/UploadPage';
 
 function App(): React.JSX.Element {
   const ipcHandle = (): void => window.electron.ipcRenderer.send('ping');
+  const steps = new Map<string, React.ReactNode>([
+    ['Upload', <UploadPage />],
+    ['Output', <FileTreeConfigurator />],
+    ['Model', <ModelSelectorInstaller />],
+    ['Translation', <TranslationProgress />],
+    ['Finish', <CompletionPage />]
+  ]);
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <main>
-        <Stepper>
-          <UploadPage />
-          {/* <FileTreeConfigurator /> */}
-          {/* <ModelSelectorInstaller /> */}
-          {/* <TranslationProgress /> */}
-          {/* <CompletionPage /> */}
-        </Stepper>
+        <Stepper steps={steps} />
       </main>
     </ThemeProvider>
   );
