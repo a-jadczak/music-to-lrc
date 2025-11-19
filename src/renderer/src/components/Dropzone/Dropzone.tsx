@@ -1,12 +1,19 @@
 import './Dropzone.css';
 import Upload from '@mui/icons-material/Upload';
 import { Box, Typography } from '@mui/material';
+import { FilesContext } from '@renderer/contexts/FilesContext';
+import { useContext } from 'react';
 
 const Dropzone = () => {
-  const uploadFiles = async () => {
-    const files = await window.electronAPI.uploadFiles();
+  const { setFiles } = useContext(FilesContext)!;
 
-    console.log(files);
+  const uploadFiles = async () => {
+    const dialogResult = await window.electronAPI.uploadFiles();
+
+    if (dialogResult.canceled) return;
+
+    console.log(dialogResult.filePaths);
+    setFiles(dialogResult.filePaths);
   };
 
   return (

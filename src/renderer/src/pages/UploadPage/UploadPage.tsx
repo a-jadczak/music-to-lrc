@@ -1,7 +1,6 @@
 import { Box, Chip } from '@mui/material';
 import Dropzone from '@renderer/components/Dropzone/Dropzone';
 import AudioFileIcon from '@mui/icons-material/AudioFile';
-import { useEffect } from 'react';
 
 const UploadPage = () => {
   return (

@@ -11,24 +11,17 @@ import IconLabel from '../../components/IconLabel/IconLabel';
 import DescriptionIcon from '@mui/icons-material/Description';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import './FileTreeConfigurator.css';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { FilesContext } from '@renderer/contexts/FilesContext';
 
 const FileTreeConfigurator = () => {
+  const { getFileNames } = useContext(FilesContext)!;
   const [path, setPath] = useState('');
 
   const [placeInFolders, setPlaceInFolders] = useState(true);
   const [includeSourceFiles, setIncludeSourceFiles] = useState(true);
 
-  const [arr, setArr] = useState([
-    'John',
-    'John 1',
-    'John 2',
-    'John 3',
-    'John 4',
-    'John 5'
-  ]);
-
-  const setDirectory = async () => {
+  const setSelectedPath = async () => {
     const dir = await window.electronAPI.openDirectory();
     console.log(dir);
     if (dir.canceled) return;
@@ -73,18 +66,19 @@ const FileTreeConfigurator = () => {
             <CreateNewFolderIcon
               sx={{ transition: 'transform 0.35s ease' }}
               fontSize="large"
-              onClick={setDirectory}
+              onClick={setSelectedPath}
             />
           </Box>
           <input
             className="path-input"
             value={path}
             type="text"
-            placeholder="Enter destination path"
+            placeholder="C:\Users\Home"
+            readOnly={true}
           />
         </Box>
         <Box className="file-tree-result">
-          {arr.map((e) => {
+          {getFileNames().map((e) => {
             return (
               <>
                 {placeInFolders && (

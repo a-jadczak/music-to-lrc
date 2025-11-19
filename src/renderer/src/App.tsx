@@ -7,6 +7,7 @@ import ModelSelectorInstaller from './pages/ModelSelectorInstaller/ModelSelector
 import TranslationProgress from './pages/TranslationProgress/TranslationProgress';
 import CompletionPage from './pages/CompletionPage/CompletionPage';
 import UploadPage from './pages/UploadPage/UploadPage';
+import { FilesProvider } from './contexts/FilesContext';
 
 function App(): React.JSX.Element {
   const steps = new Map<string, React.ReactNode>([
@@ -21,7 +22,9 @@ function App(): React.JSX.Element {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <main>
-        <Stepper steps={steps} />
+        <FilesProvider>
+          <Stepper steps={steps} />
+        </FilesProvider>
       </main>
     </ThemeProvider>
   );
