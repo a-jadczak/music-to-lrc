@@ -2,10 +2,11 @@ import './Dropzone.css';
 import Upload from '@mui/icons-material/Upload';
 import { Box, Typography } from '@mui/material';
 import { FilesContext } from '@renderer/contexts/FilesContext';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 const Dropzone = () => {
   const { setFiles } = useContext(FilesContext)!;
+  const [dragging, setDragging] = useState(false);
 
   const uploadFiles = async () => {
     const dialogResult = await window.electronAPI.uploadFiles();
@@ -16,23 +17,31 @@ const Dropzone = () => {
     setFiles(dialogResult.filePaths);
   };
 
+  function handleDrop(e: React.DragEvent<HTMLDivElement>) {
+    e.preventDefault();
+    const files = Array.from(e.dataTransfer?.files || []);
+    console.log(files);
+    handleDragLeave();
+  }
+
+  function handleDragOver(e: React.DragEvent<HTMLDivElement>) {
+    e.preventDefault();
+    setDragging(true);
+  }
+  const handleDragLeave = () => setDragging(false);
+
   return (
     <Box className="dropzone-container" onClick={uploadFiles}>
       <Box
-        className="dropzone"
-        sx={{
-          color: 'text.secondary',
-          borderColor: 'text.secondary',
-          '&:hover': {
-            bgcolor: 'primary.light',
-            color: 'white',
-            borderColor: 'white'
-          }
-        }}
+        onDrop={handleDrop}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDragEnd={handleDragLeave}
+        className={`dropzone ${dragging && 'dragging'}`}
       >
         <Upload sx={{ fontSize: '3.5em' }} />
         <Typography component={'span'}>
-          Drag and drop files or click here
+          Drag and drop audio files or click here
         </Typography>
       </Box>
     </Box>

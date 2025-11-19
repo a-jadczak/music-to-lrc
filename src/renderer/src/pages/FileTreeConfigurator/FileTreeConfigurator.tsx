@@ -15,8 +15,7 @@ import { useContext, useState } from 'react';
 import { FilesContext } from '@renderer/contexts/FilesContext';
 
 const FileTreeConfigurator = () => {
-  const { getFileNames } = useContext(FilesContext)!;
-  const [path, setPath] = useState('');
+  const { getFileNames, outputPath, setOutputPath } = useContext(FilesContext)!;
 
   const [placeInFolders, setPlaceInFolders] = useState(true);
   const [includeSourceFiles, setIncludeSourceFiles] = useState(true);
@@ -26,7 +25,7 @@ const FileTreeConfigurator = () => {
     console.log(dir);
     if (dir.canceled) return;
 
-    setPath(dir.filePaths[0]);
+    setOutputPath(dir.filePaths[0]);
   };
 
   return (
@@ -71,7 +70,7 @@ const FileTreeConfigurator = () => {
           </Box>
           <input
             className="path-input"
-            value={path}
+            value={outputPath}
             type="text"
             placeholder="C:\Users\Home"
             readOnly={true}

@@ -1,8 +1,12 @@
 import { Box, Chip } from '@mui/material';
 import Dropzone from '@renderer/components/Dropzone/Dropzone';
 import AudioFileIcon from '@mui/icons-material/AudioFile';
+import { useContext } from 'react';
+import { FilesContext } from '@renderer/contexts/FilesContext';
 
 const UploadPage = () => {
+  const { getFileNames } = useContext(FilesContext)!;
+
   return (
     <>
       <Dropzone />
@@ -15,20 +19,9 @@ const UploadPage = () => {
           gap: 1
         }}
       >
-        <Chip icon={<AudioFileIcon />} label="With Icon" />
-        <Chip icon={<AudioFileIcon />} label="With Icon" />
-        <Chip icon={<AudioFileIcon />} label="With Icon" />
-        <Chip icon={<AudioFileIcon />} label="With Icon" />
-        <Chip icon={<AudioFileIcon />} label="With Icon" />
-        <Chip icon={<AudioFileIcon />} label="With Icon" />
-        <Chip icon={<AudioFileIcon />} label="With Icon" />
-        <Chip icon={<AudioFileIcon />} label="With Icon" />
-        <Chip icon={<AudioFileIcon />} label="With Icon" />
-        <Chip icon={<AudioFileIcon />} label="With Icon" />
-        <Chip icon={<AudioFileIcon />} label="With Icon" />
-        <Chip icon={<AudioFileIcon />} label="With Icon" />
-        <Chip icon={<AudioFileIcon />} label="With Icon" />
-        <Chip icon={<AudioFileIcon />} label="With Icon" />
+        {getFileNames().map((e) => (
+          <Chip icon={<AudioFileIcon />} label={e} />
+        ))}
       </Box>
     </>
   );
