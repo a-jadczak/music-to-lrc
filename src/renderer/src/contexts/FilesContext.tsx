@@ -25,7 +25,7 @@ export const FilesProvider = ({ children }: { children: ReactNode }) => {
   const addFile = (file: AudioFile) => setFilesState((prev) => [...prev, file]);
   const addFiles = (newFiles: AudioFile[]) => setFilesState((prev) => [...prev, ...newFiles]);
   const deleteFile = (fileToDelete: AudioFile) =>
-    setFilesState(files.filter((file) => file.path !== fileToDelete.path));
+    setFilesState(files.filter((file) => file.id !== fileToDelete.id));
   const clearFiles = () => setFilesState([]);
   const getFileNames = () => files.map((e) => getFileName(e.path));
 

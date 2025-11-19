@@ -4,6 +4,7 @@ import { Box, Typography } from '@mui/material';
 import { FilesContext } from '@renderer/contexts/FilesContext';
 import { useContext, useState } from 'react';
 import AudioFile from 'src/types/AudioFile';
+import uniqid from 'uniqid';
 
 const Dropzone = () => {
   const { addFiles } = useContext(FilesContext)!;
@@ -23,6 +24,7 @@ const Dropzone = () => {
     const files = Array.from(e.dataTransfer?.files || []);
     // For safety purposes, getting a file path is not allowed so we have to create an custom URL to be able to read file
     const newFiles: AudioFile[] = files.map((file) => ({
+      id: `file-${uniqid()}`,
       name: file.name,
       size: file.size,
       type: file.type,

@@ -21,7 +21,7 @@ const UploadPage = () => {
       >
         {files.map((file) => (
           <Chip
-            key={file.path}
+            key={file.id}
             icon={<AudioFileIcon />}
             onDelete={() => deleteFile(file)}
             label={file.name}

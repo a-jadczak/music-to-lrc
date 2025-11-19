@@ -1,4 +1,5 @@
 interface AudioFile {
+  id: string;
   name: string;
   path: string;
   size: number;
