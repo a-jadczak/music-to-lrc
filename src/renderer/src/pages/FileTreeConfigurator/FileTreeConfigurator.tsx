@@ -1,10 +1,4 @@
-import {
-  Box,
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
-  Typography
-} from '@mui/material';
+import { Box, Checkbox, FormControlLabel, FormGroup, Typography } from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
 import AudioFileIcon from '@mui/icons-material/AudioFile';
 import IconLabel from '../../components/IconLabel/IconLabel';
@@ -13,9 +7,10 @@ import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import './FileTreeConfigurator.css';
 import { useContext, useState } from 'react';
 import { FilesContext } from '@renderer/contexts/FilesContext';
+import { splitFileExtension } from '@renderer/utils/stringUtils';
 
 const FileTreeConfigurator = () => {
-  const { getFileNames, outputPath, setOutputPath } = useContext(FilesContext)!;
+  const { files, outputPath, setOutputPath } = useContext(FilesContext)!;
 
   const [placeInFolders, setPlaceInFolders] = useState(true);
   const [includeSourceFiles, setIncludeSourceFiles] = useState(true);
@@ -77,16 +72,17 @@ const FileTreeConfigurator = () => {
           />
         </Box>
         <Box className="file-tree-result">
-          {getFileNames().map((e) => {
+          {files.map((file) => {
             return (
               <>
-                {placeInFolders && (
-                  <IconLabel text={'Folder'} children={<FolderIcon />} />
-                )}
+                {placeInFolders && <IconLabel text={'Folder'} children={<FolderIcon />} />}
                 <Box className={`${placeInFolders && 'folder'}`}>
-                  <IconLabel text={`${e}.lrc`} children={<DescriptionIcon />} />
+                  <IconLabel
+                    text={`${splitFileExtension(file.name)}.lrc`}
+                    children={<DescriptionIcon />}
+                  />
                   {includeSourceFiles && (
-                    <IconLabel text={`${e}.mp3`} children={<AudioFileIcon />} />
+                    <IconLabel text={`${file.name}`} children={<AudioFileIcon />} />
                   )}
                 </Box>
               </>

@@ -2,6 +2,7 @@ import './Dropzone.css';
 import Upload from '@mui/icons-material/Upload';
 import { Box, Typography } from '@mui/material';
 import { FilesContext } from '@renderer/contexts/FilesContext';
+import { getFileExtension } from '@renderer/utils/stringUtils';
 import { useContext, useState } from 'react';
 import AudioFile from 'src/types/AudioFile';
 import uniqid from 'uniqid';
@@ -27,7 +28,7 @@ const Dropzone = () => {
       id: `file-${uniqid()}`,
       name: file.name,
       size: file.size,
-      type: file.type,
+      type: getFileExtension(file.name),
       path: URL.createObjectURL(file)
     }));
 

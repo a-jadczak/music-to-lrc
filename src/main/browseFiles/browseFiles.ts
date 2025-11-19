@@ -20,9 +20,9 @@ ipcMain.handle('upload-files', async (e) => {
   const files = result.filePaths.map((filePath) => ({
     id: `file-${uniqid()}`,
     name: path.basename(filePath),
-    path: filePath,
     size: fs.statSync(filePath).size,
-    type: path.extname(filePath).slice(1)
+    type: path.extname(filePath).slice(1),
+    path: filePath
   }));
 
   return { canceled: false, files };

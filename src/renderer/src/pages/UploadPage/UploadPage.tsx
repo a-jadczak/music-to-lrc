@@ -1,4 +1,4 @@
-import { Alert, Box, Chip } from '@mui/material';
+import { Box, Chip } from '@mui/material';
 import Dropzone from '@renderer/components/Dropzone/Dropzone';
 import AudioFileIcon from '@mui/icons-material/AudioFile';
 import { useContext } from 'react';
@@ -28,9 +28,6 @@ const UploadPage = () => {
           />
         ))}
       </Box>
-      <Alert severity="error" sx={{ mt: 2 }}>
-        This is an error Alert.
-      </Alert>
     </>
   );
 };
