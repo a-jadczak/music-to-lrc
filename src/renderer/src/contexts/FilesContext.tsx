@@ -1,27 +1,33 @@
 import { getFileName } from '@renderer/utils/stringUtils';
 import { createContext, useState, ReactNode } from 'react';
+import AudioFile from 'src/types/AudioFile';
 
 interface FilesContextType {
-  files: string[];
+  files: AudioFile[];
   outputPath: string;
   setOutputPath: (path: string) => void;
-  setFiles: (files: string[]) => void;
-  addFile: (file: string) => void;
+  setFiles: (files: AudioFile[]) => void;
+  addFile: (file: AudioFile) => void;
+  addFiles: (files: AudioFile[]) => void;
+  deleteFile: (file: AudioFile) => void;
   clearFiles: () => void;
   getFileNames: () => string[];
 }
 
-export const FilesContext = createContext<FilesContextType | undefined>(
-  undefined
-);
+export const FilesContext = createContext<FilesContextType | undefined>(undefined);
 
 export const FilesProvider = ({ children }: { children: ReactNode }) => {
-  const [files, setFilesState] = useState<string[]>([]);
+  const [files, setFilesState] = useState<AudioFile[]>([]);
   const [outputPath, setOutputPath] = useState<string>('');
-  const setFiles = (newFiles: string[]) => setFilesState(newFiles);
-  const addFile = (file: string) => setFilesState((prev) => [...prev, file]);
+
+  const setFiles = (newFiles: AudioFile[]) => setFilesState(newFiles);
+
+  const addFile = (file: AudioFile) => setFilesState((prev) => [...prev, file]);
+  const addFiles = (newFiles: AudioFile[]) => setFilesState((prev) => [...prev, ...newFiles]);
+  const deleteFile = (fileToDelete: AudioFile) =>
+    setFilesState(files.filter((file) => file.path !== fileToDelete.path));
   const clearFiles = () => setFilesState([]);
-  const getFileNames = () => files.map((e) => getFileName(e));
+  const getFileNames = () => files.map((e) => getFileName(e.path));
 
   return (
     <FilesContext.Provider
@@ -30,6 +36,8 @@ export const FilesProvider = ({ children }: { children: ReactNode }) => {
         outputPath,
         setOutputPath,
         setFiles,
+        addFiles,
+        deleteFile,
         addFile,
         clearFiles,
         getFileNames
