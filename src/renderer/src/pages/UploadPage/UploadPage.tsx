@@ -4,8 +4,9 @@ import AudioFileIcon from '@mui/icons-material/AudioFile';
 import { useContext, useEffect } from 'react';
 import { FilesContext } from '@renderer/contexts/FilesContext';
 import StepperContext from '@renderer/contexts/StepperContext';
+import './UploadPage.css';
 
-const UploadPage = () => {
+const UploadPage = (): React.JSX.Element => {
   const { files, deleteFile } = useContext(FilesContext)!;
   const { setNextStepAvalible } = useContext(StepperContext)!;
 
@@ -16,17 +17,10 @@ const UploadPage = () => {
   return (
     <>
       <Dropzone />
-      <Box
-        sx={{
-          mt: 2,
-          display: 'flex',
-          justifyContent: 'center',
-          flexWrap: 'wrap',
-          gap: 1
-        }}
-      >
+      <Box className="chips-container">
         {files.map((file) => (
           <Chip
+            className="chip"
             key={file.id}
             icon={<AudioFileIcon />}
             onDelete={() => deleteFile(file)}

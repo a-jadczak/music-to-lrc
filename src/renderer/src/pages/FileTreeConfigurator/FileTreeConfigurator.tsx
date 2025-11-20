@@ -1,14 +1,12 @@
-import { Box, Checkbox, FormControlLabel, FormGroup, Typography } from '@mui/material';
-import FolderIcon from '@mui/icons-material/Folder';
-import AudioFileIcon from '@mui/icons-material/AudioFile';
-import IconLabel from '../../components/IconLabel/IconLabel';
-import DescriptionIcon from '@mui/icons-material/Description';
-import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
+import { Box, Typography } from '@mui/material';
 import './FileTreeConfigurator.css';
 import { useContext, useEffect, useState } from 'react';
 import { FilesContext } from '@renderer/contexts/FilesContext';
-import { isEmpty, splitFileExtension } from '@renderer/utils/stringUtils';
+import { isEmpty } from '@renderer/utils/stringUtils';
 import StepperContext from '@renderer/contexts/StepperContext';
+import DirectoryInput from './DirectoryInput';
+import FileItem from './FileItem';
+import OutputOptions from './OutputOptions';
 
 const FileTreeConfigurator = () => {
   const { files, outputPath, setOutputPath } = useContext(FilesContext)!;
@@ -35,68 +33,25 @@ const FileTreeConfigurator = () => {
       <Typography component="h2" variant="h4">
         Output Settings
       </Typography>
-      <FormGroup>
-        <FormControlLabel
-          control={
-            <Checkbox
-              onChange={() => setPlaceInFolders((prev) => (prev = !prev))}
-              checked={placeInFolders}
-            />
-          }
-          label="Place in folders"
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              onChange={() => setIncludeSourceFiles((prev) => (prev = !prev))}
-              checked={includeSourceFiles}
-            />
-          }
-          label="Include source files"
-        />
 
-        <Box className="input-group">
-          <Box
-            className="icon"
-            sx={{
-              '&:hover > *': {
-                transform: 'scale(1.1)'
-              }
-            }}
-          >
-            <CreateNewFolderIcon
-              sx={{ transition: 'transform 0.35s ease' }}
-              fontSize="large"
-              onClick={setSelectedPath}
-            />
-          </Box>
-          <input
-            className="path-input"
-            value={outputPath}
-            type="text"
-            placeholder="C:\Users\Home"
-            readOnly={true}
+      <OutputOptions
+        placeInFolders={placeInFolders}
+        setPlaceInFolders={setPlaceInFolders}
+        includeSourceFiles={includeSourceFiles}
+        setIncludeSourceFiles={setIncludeSourceFiles}
+      />
+
+      <DirectoryInput outputPath={outputPath} onSelect={setSelectedPath} />
+
+      <Box className="file-tree-result">
+        {files.map((file) => (
+          <FileItem
+            file={file}
+            placeInFolders={placeInFolders}
+            includeSourceFiles={includeSourceFiles}
           />
-        </Box>
-        <Box className="file-tree-result">
-          {files.map((file) => {
-            return (
-              <>
-                {placeInFolders && <IconLabel text={'Folder'} children={<FolderIcon />} />}
-                <Box className={`${placeInFolders && 'folder'}`}>
-                  <IconLabel
-                    text={`${splitFileExtension(file.name)}.lrc`}
-                    children={<DescriptionIcon />}
-                  />
-                  {includeSourceFiles && (
-                    <IconLabel text={`${file.name}`} children={<AudioFileIcon />} />
-                  )}
-                </Box>
-              </>
-            );
-          })}
-        </Box>
-      </FormGroup>
+        ))}
+      </Box>
     </>
   );
 };

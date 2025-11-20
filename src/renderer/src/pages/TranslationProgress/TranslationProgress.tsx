@@ -5,7 +5,7 @@ import StepperContext from '@renderer/contexts/StepperContext';
 
 const TranslationProgress = () => {
   const { setNextStepAvalible } = useContext(StepperContext)!;
-  const [isTranslating, setIsTranslating] = useState(true);
+  const [isTranslating, setIsTranslating] = useState(false);
 
   useEffect(() => {
     setNextStepAvalible(!isTranslating);
