@@ -1,11 +1,17 @@
 import { Box, Chip } from '@mui/material';
 import Dropzone from '@renderer/components/Dropzone/Dropzone';
 import AudioFileIcon from '@mui/icons-material/AudioFile';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { FilesContext } from '@renderer/contexts/FilesContext';
+import StepperContext from '@renderer/contexts/StepperContext';
 
 const UploadPage = () => {
   const { files, deleteFile } = useContext(FilesContext)!;
+  const { setNextStepAvalible } = useContext(StepperContext)!;
+
+  useEffect(() => {
+    setNextStepAvalible(files.length >= 1);
+  }, [files]);
 
   return (
     <>
