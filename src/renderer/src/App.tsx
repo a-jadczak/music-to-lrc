@@ -44,7 +44,7 @@ function App(): React.JSX.Element {
       <CssBaseline />
       <main>
         <FilesProvider>
-          <Stepper steps={steps}>{steps.map((step) => step.component)}</Stepper>
+          <Stepper steps={steps} />
         </FilesProvider>
       </main>
     </ThemeProvider>

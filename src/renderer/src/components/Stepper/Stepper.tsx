@@ -6,10 +6,9 @@ import StepperContext from '@renderer/contexts/StepperContext';
 
 interface StepperProps {
   steps: Step[];
-  children: React.ReactNode;
 }
 
-const Stepper: React.FC<StepperProps> = ({ steps, children }): JSX.Element => {
+const Stepper: React.FC<StepperProps> = ({ steps }): JSX.Element => {
   const [activeStep, setActiveStep] = useState(0);
   const [nextStepAvalible, setNextStepAvalible] = useState<boolean>(false);
 
@@ -24,7 +23,7 @@ const Stepper: React.FC<StepperProps> = ({ steps, children }): JSX.Element => {
       </StepperMUI>
 
       <StepperContext.Provider value={{ nextStepAvalible, setNextStepAvalible }}>
-        <Box className="stepper-children">{children && children[activeStep]}</Box>
+        <Box className="stepper-children">{steps[activeStep].component}</Box>
       </StepperContext.Provider>
 
       <Box className="stepper-buttons">
