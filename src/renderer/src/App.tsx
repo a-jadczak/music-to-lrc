@@ -8,15 +8,16 @@ import TranslationProgress from './pages/TranslationProgress/TranslationProgress
 import CompletionPage from './pages/CompletionPage/CompletionPage';
 import UploadPage from './pages/UploadPage/UploadPage';
 import { FilesProvider } from './contexts/FilesContext';
+import Step from 'src/types/Step';
 
 function App(): React.JSX.Element {
-  const steps = new Map<string, React.ReactNode>([
-    ['Upload', <UploadPage />],
-    ['Output', <FileTreeConfigurator />],
-    ['Model', <ModelSelectorInstaller />],
-    ['Translation', <TranslationProgress />],
-    ['Finish', <CompletionPage />]
-  ]);
+  const steps: Step[] = [
+    { name: 'Upload', component: <UploadPage /> },
+    { name: 'Output', component: <FileTreeConfigurator /> },
+    { name: 'Model', component: <ModelSelectorInstaller /> },
+    { name: 'Translation', component: <TranslationProgress /> },
+    { name: 'Finish', component: <CompletionPage /> }
+  ];
 
   return (
     <ThemeProvider theme={theme}>

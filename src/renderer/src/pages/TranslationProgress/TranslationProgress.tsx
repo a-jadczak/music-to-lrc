@@ -1,11 +1,4 @@
-import {
-  Box,
-  CircularProgress,
-  LinearProgress,
-  Stack,
-  Typography
-} from '@mui/material';
-import React from 'react';
+import { Box, CircularProgress, LinearProgress, Stack, Typography } from '@mui/material';
 import './TranslationProgress.css';
 
 const TranslationProgress = () => {
@@ -38,9 +31,7 @@ const TranslationProgress = () => {
         </Box>
         <Box sx={{ flex: 2 }} className="output-box">
           <Box className="output-shadow-box"></Box>
-          <CircularProgress
-            sx={{ position: 'absolute', bottom: 0, right: 0, margin: '1em' }}
-          />
+          <CircularProgress sx={{ position: 'absolute', bottom: 0, right: 0, margin: '1em' }} />
           <span>[hh:mm:ss] Hello</span>
           <span>[hh:mm:ss] What's</span>
           <span>[hh:mm:ss] Going</span>

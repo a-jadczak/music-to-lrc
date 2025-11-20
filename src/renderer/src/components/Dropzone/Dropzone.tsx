@@ -18,16 +18,6 @@ const Dropzone = () => {
     }
   }, [addFiles]);
 
-  const handleDrop = useCallback(
-    (e: React.DragEvent<HTMLDivElement>) => {
-      e.preventDefault();
-      const files = Array.from(e.dataTransfer?.files || []);
-      addFiles(createAudioFiles(files));
-      setDragging(false);
-    },
-    [addFiles]
-  );
-
   const createAudioFiles = (files: File[]): AudioFile[] => {
     return files.map((file) => ({
       id: `file-${uniqid()}`,
@@ -38,6 +28,16 @@ const Dropzone = () => {
       path: URL.createObjectURL(file)
     }));
   };
+
+  const handleDrop = useCallback(
+    (e: React.DragEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      const files = Array.from(e.dataTransfer?.files || []);
+      addFiles(createAudioFiles(files));
+      setDragging(false);
+    },
+    [addFiles]
+  );
 
   const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();

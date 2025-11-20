@@ -1,4 +1,4 @@
-import { getFileName } from '@renderer/utils/stringUtils';
+import { getFileName } from './../utils/stringUtils';
 import { createContext, useState, ReactNode } from 'react';
 import AudioFile from 'src/types/AudioFile';
 
@@ -22,12 +22,12 @@ export const FilesProvider = ({ children }: { children: ReactNode }) => {
 
   const setFiles = (newFiles: AudioFile[]) => setFilesState(newFiles);
 
-  const addFile = (file: AudioFile) => setFilesState((prev) => [...prev, file]);
-  const addFiles = (newFiles: AudioFile[]) => setFilesState((prev) => [...prev, ...newFiles]);
+  const addFile = (file: AudioFile) => setFilesState((files) => [...files, file]);
+  const addFiles = (newFiles: AudioFile[]) => setFilesState((files) => [...files, ...newFiles]);
   const deleteFile = (fileToDelete: AudioFile) =>
     setFilesState(files.filter((file) => file.id !== fileToDelete.id));
   const clearFiles = () => setFilesState([]);
-  const getFileNames = () => files.map((e) => getFileName(e.path));
+  const getFileNames = () => files.map((file) => getFileName(file.path));
 
   return (
     <FilesContext.Provider

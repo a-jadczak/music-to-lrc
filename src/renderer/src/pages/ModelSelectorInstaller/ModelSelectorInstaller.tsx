@@ -1,13 +1,5 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Typography
-} from '@mui/material';
-import React, { useState } from 'react';
+import { Box, Button, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
+import { useState } from 'react';
 import LinearProgressWithLabel from '../../components/LinearProgressWithLabel/LinearProgressWithLabel';
 
 const ModelSelectorInstaller = () => {
@@ -19,10 +11,10 @@ const ModelSelectorInstaller = () => {
         Select Model
       </Typography>
       <Typography component="p" sx={{ color: 'text.secondary' }}>
-        A larger model size usually means that the translation will take more
-        time to complete. However, the benefit is that the results are generally
-        more accurate. Bigger models can analyze more details and understand the
-        context better, which leads to higher-quality translations.
+        A larger model size usually means that the translation will take more time to complete.
+        However, the benefit is that the results are generally more accurate. Bigger models can
+        analyze more details and understand the context better, which leads to higher-quality
+        translations.
       </Typography>
       <FormControl sx={{ marginTop: '1em', width: '100%' }}>
         <InputLabel id="model-label">Model</InputLabel>

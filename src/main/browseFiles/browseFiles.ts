@@ -2,6 +2,7 @@ import { BrowserWindow, dialog, ipcMain } from 'electron';
 import fs from 'fs';
 import path from 'path';
 import uniqid from 'uniqid';
+import AudioFile from './../../types/AudioFile';
 
 ipcMain.handle('upload-files', async (e) => {
   const window = BrowserWindow.fromWebContents(e.sender);
@@ -17,7 +18,7 @@ ipcMain.handle('upload-files', async (e) => {
 
   if (result.canceled) return { canceled: true, files: [] };
 
-  const files = result.filePaths.map((filePath) => ({
+  const files: AudioFile[] = result.filePaths.map((filePath) => ({
     id: `file-${uniqid()}`,
     name: path.basename(filePath),
     size: fs.statSync(filePath).size,
