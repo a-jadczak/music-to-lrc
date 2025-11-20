@@ -5,23 +5,30 @@ import IconLabel from '../../components/IconLabel/IconLabel';
 import DescriptionIcon from '@mui/icons-material/Description';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import './FileTreeConfigurator.css';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FilesContext } from '@renderer/contexts/FilesContext';
-import { splitFileExtension } from '@renderer/utils/stringUtils';
+import { isEmpty, splitFileExtension } from '@renderer/utils/stringUtils';
+import StepperContext from '@renderer/contexts/StepperContext';
 
 const FileTreeConfigurator = () => {
   const { files, outputPath, setOutputPath } = useContext(FilesContext)!;
+  const { setNextStepAvalible } = useContext(StepperContext)!;
 
   const [placeInFolders, setPlaceInFolders] = useState(true);
   const [includeSourceFiles, setIncludeSourceFiles] = useState(true);
 
   const setSelectedPath = async () => {
     const dir = await window.electronAPI.openDirectory();
-    console.log(dir);
+
     if (dir.canceled) return;
 
     setOutputPath(dir.filePaths[0]);
+    setNextStepAvalible(!isEmpty(dir.filePaths[0]));
   };
+
+  useEffect(() => {
+    setNextStepAvalible(!isEmpty(outputPath));
+  }, []);
 
   return (
     <>

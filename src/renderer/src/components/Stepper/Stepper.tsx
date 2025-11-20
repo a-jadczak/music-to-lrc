@@ -22,7 +22,7 @@ const Stepper: React.FC<StepperProps> = ({ steps }): JSX.Element => {
         ))}
       </StepperMUI>
 
-      <StepperContext.Provider value={{ nextStepAvalible, setNextStepAvalible }}>
+      <StepperContext.Provider value={{ setActiveStep, setNextStepAvalible }}>
         <Box className="stepper-children">{steps[activeStep].component}</Box>
       </StepperContext.Provider>
 

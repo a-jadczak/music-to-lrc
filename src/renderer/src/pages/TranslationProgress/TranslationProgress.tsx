@@ -1,7 +1,16 @@
 import { Box, CircularProgress, LinearProgress, Stack, Typography } from '@mui/material';
 import './TranslationProgress.css';
+import { useContext, useEffect, useState } from 'react';
+import StepperContext from '@renderer/contexts/StepperContext';
 
 const TranslationProgress = () => {
+  const { setNextStepAvalible } = useContext(StepperContext)!;
+  const [isTranslating, setIsTranslating] = useState(true);
+
+  useEffect(() => {
+    setNextStepAvalible(!isTranslating);
+  }, [isTranslating]);
+
   return (
     <>
       <Box sx={{ display: 'flex' }}>

@@ -1,9 +1,19 @@
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import LinearProgressWithLabel from '../../components/LinearProgressWithLabel/LinearProgressWithLabel';
+import { SelectChangeEvent } from '@mui/material';
+import StepperContext from '@renderer/contexts/StepperContext';
+import { isEmpty } from '@renderer/utils/stringUtils';
 
 const ModelSelectorInstaller = () => {
+  const { setNextStepAvalible } = useContext(StepperContext)!;
+
   const [isInstalling, setIsInstalling] = useState(false);
+  const [selectedModel, setSelectedModel] = useState<string | null>(null);
+
+  useEffect(() => {
+    setNextStepAvalible(!isEmpty(selectedModel) && !isInstalling);
+  }, [selectedModel, isInstalling]);
 
   return (
     <>
@@ -18,28 +28,44 @@ const ModelSelectorInstaller = () => {
       </Typography>
       <FormControl sx={{ marginTop: '1em', width: '100%' }}>
         <InputLabel id="model-label">Model</InputLabel>
-        <Select labelId="model-label" label="Model">
-          <MenuItem value={1}>small</MenuItem>
-          <MenuItem value={2}>medium</MenuItem>
-          <MenuItem value={3}>large</MenuItem>
+        <Select
+          onChange={(e: SelectChangeEvent<string>) => {
+            setSelectedModel(e.target.value);
+          }}
+          labelId="model-label"
+          label="Model"
+          disabled={isInstalling}
+        >
+          <MenuItem value={'small'}>small</MenuItem>
+          <MenuItem value={'medium'}>medium</MenuItem>
+          <MenuItem value={'large'}>large</MenuItem>
         </Select>
       </FormControl>
 
-      <Box component={'p'} sx={{ marginTop: '1em' }}>
-        Model weight:{' '}
-        <Typography component={'span'} sx={{ color: 'text.secondary' }}>
-          2.05 GB
-        </Typography>
-      </Box>
-      <Box sx={{ marginTop: '.5em' }}>
-        {isInstalling ? (
-          <LinearProgressWithLabel value={23} />
-        ) : (
-          <Button size="small" variant="contained" color="success">
-            Install
-          </Button>
-        )}
-      </Box>
+      {selectedModel && (
+        <>
+          <Box component={'p'} sx={{ marginTop: '1em' }}>
+            Model weight:{' '}
+            <Typography component={'span'} sx={{ color: 'text.secondary' }}>
+              2.05 GB
+            </Typography>
+          </Box>
+          <Box sx={{ marginTop: '.5em' }}>
+            {isInstalling ? (
+              <LinearProgressWithLabel value={23} />
+            ) : (
+              <Button
+                onClick={() => setIsInstalling(true)}
+                size="small"
+                variant="contained"
+                color="success"
+              >
+                Install
+              </Button>
+            )}
+          </Box>
+        </>
+      )}
     </>
   );
 };

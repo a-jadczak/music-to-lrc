@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 
 interface StepperContextType {
-  nextStepAvalible: boolean;
+  setActiveStep: (value: number) => void;
   setNextStepAvalible: (value: boolean) => void;
 }
 
