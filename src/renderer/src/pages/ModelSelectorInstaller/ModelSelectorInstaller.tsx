@@ -5,7 +5,7 @@ import { SelectChangeEvent } from '@mui/material';
 import StepperContext from '@renderer/contexts/StepperContext';
 import { isEmpty } from '@renderer/utils/stringUtils';
 
-const ModelSelectorInstaller = () => {
+const ModelSelectorInstaller = (): React.JSX.Element => {
   const { setNextStepAvalible } = useContext(StepperContext)!;
 
   const [isInstalling, setIsInstalling] = useState(false);

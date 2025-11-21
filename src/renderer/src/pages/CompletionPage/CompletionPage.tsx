@@ -4,7 +4,7 @@ import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import StepperContext from '@renderer/contexts/StepperContext';
 import './CompletionPage.css';
 
-const CompletionPage = () => {
+const CompletionPage = (): React.JSX.Element => {
   const { setActiveStep } = useContext(StepperContext)!;
 
   return (

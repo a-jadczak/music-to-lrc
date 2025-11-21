@@ -1,5 +1,5 @@
-import { createTheme } from "@mui/material";
-import { grey } from "@mui/material/colors";
+import { createTheme } from '@mui/material';
+import { grey } from '@mui/material/colors';
 
 const theme = createTheme({
   palette: {
@@ -12,7 +12,7 @@ const theme = createTheme({
       main: '#673ab7'
     },
     grey: {
-      700: grey[700],
+      700: grey[700]
     }
   }
 });

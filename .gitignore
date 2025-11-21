@@ -4,3 +4,14 @@ out
 .DS_Store
 .eslintcache
 *.log*
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# PyInstaller build
+python_build/
+dist/
+build/
+*.spec
