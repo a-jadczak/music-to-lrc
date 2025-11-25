@@ -1,5 +1,9 @@
-import torch
-import requests
-from huggingface_hub import HfApi
-from faster_whisper import WhisperModel
+from fastapi import FastAPI, WebSocket
+from pathlib import Path
+import asyncio
 
+app = FastAPI()
+
+@app.get("/")
+async def root():
+  return {"message": "Backend is running!"}
