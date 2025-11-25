@@ -12,7 +12,7 @@ def get_models_name():
 
   return models
 
-def get_model_total_wage(model_name):
+def get_model_total_weight(model_name):
   info = get_model_info(model_name)
   total_size = sum(f.size for f in info.siblings)
 
