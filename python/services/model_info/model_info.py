@@ -1,12 +1,10 @@
-from pathlib import Path
-from huggingface_hub import HfApi
-from constants.hf_repo import AUTHOR, REPO
+from constants.hf_repo import REPO, MODEL_FILE_NAME
 from utils.sha import sha256_file
-
-api = HfApi()
+from helpers.path_helpers import get_model_path
+from helpers.model_helpers import get_model_info, get_models
 
 def get_models_name():
-  faster_whisper_models = api.list_models(author=AUTHOR)
+  faster_whisper_models = get_models()
   models = [m.modelId for m in faster_whisper_models if "faster-whisper" in m.modelId]
 
   for i in range(len(models)):
@@ -15,24 +13,21 @@ def get_models_name():
   return models
 
 def get_model_total_wage(model_name):
-  repo_id = f"{REPO}{model_name}"
-  info = api.model_info(repo_id, files_metadata=True)
+  info = get_model_info(model_name)
   total_size = sum(f.size for f in info.siblings)
 
   return total_size
 
 def get_model_sha256(model_name):
-  repo_id = f"{REPO}{model_name}"
-  info = api.model_info(repo_id, files_metadata=True)
+  info = get_model_info(model_name)
   for file in info.siblings:
-    if file.rfilename == "model.bin":
+    if file.rfilename == MODEL_FILE_NAME:
       return file.lfs.sha256 
     
   return None
 
 def is_model_installed(model_name):
-  model_id = f"models--Systran--faster-whisper-{model_name}"
-  cache_path = Path.home() / ".cache" / "huggingface" / "hub" / model_id / "snapshots" / "temp_snapshot" / "model.bin"
+  cache_path = get_model_path(model_name) 
 
   if not cache_path.exists():
     return False
@@ -41,6 +36,3 @@ def is_model_installed(model_name):
   saved_model_sha = sha256_file(cache_path)
   
   return excepted_model_sha == saved_model_sha
-
-
-is_model_installed("tiny")
