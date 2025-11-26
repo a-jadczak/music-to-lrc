@@ -54,5 +54,3 @@ def download_hf_repo_to_cache(model_name):
 
   for file in file_queue:
     download_model(file, downloaded, snapshot_dir, repo_id, total_size)
-
-download_hf_repo_to_cache("tiny")

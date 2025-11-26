@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+import torch
 from utils.download_utils import bytes_to_megabytes
 from services.model_info.model_info import get_models_name, get_model_total_weight, is_model_installed as model_is_installed
 
@@ -10,7 +11,7 @@ def status():
   return {"status": "ok"}
 
 @router.get("/models")
-def get_models():
+def is_cuda_available():
   models = get_models_name()
   return {"author": "x", "models": models}
 
@@ -23,3 +24,10 @@ def get_model_weight(model_name: str):
 def is_model_installed(model_name: str):
   is_installed = model_is_installed(model_name)
   return {"model": model_name, "installed": is_installed}
+
+@router.get("/cuda")
+def is_cuda_available():
+  available = torch.cuda.is_available() 
+  print(torch.__version__)
+  print(torch.version.cuda)
+  return {"available": available}
