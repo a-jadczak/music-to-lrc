@@ -1,9 +1,12 @@
 from fastapi import APIRouter
+from api.routes.helpers.languages import code_to_name
 from utils.download_utils import bytes_to_megabytes
 from services.model_info.model_info import get_models_name, get_model_total_weight, is_model_installed as model_is_installed
 from faster_whisper import WhisperModel
 
 router = APIRouter(prefix="/models")
+
+model_instance = WhisperModel("base")
 
 @router.get("/")
 def is_cuda_available():
@@ -22,7 +25,6 @@ def is_model_installed(model_name: str):
 
 @router.get("/supported-languages")
 def get_model_languages():
-  model = WhisperModel("base")
-  languages = model.supported_languages if hasattr(model, "supported_languages") else []
-
-  return {"languages": languages}
+  languages = model_instance.supported_languages
+  languages_with_codes = [{c: code_to_name(c) } for c in languages]
+  return languages_with_codes
