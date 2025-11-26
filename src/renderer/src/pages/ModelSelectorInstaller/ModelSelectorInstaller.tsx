@@ -6,6 +6,7 @@ import {
   MenuItem,
   Select,
   Slider,
+  Tooltip,
   Typography
 } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
@@ -13,12 +14,14 @@ import LinearProgressWithLabel from '../../components/LinearProgressWithLabel/Li
 import { SelectChangeEvent } from '@mui/material';
 import StepperContext from '@renderer/contexts/StepperContext';
 import { isEmpty } from '@renderer/utils/stringUtils';
-import { Label } from '@mui/icons-material';
+import InfoIcon from '@mui/icons-material/Info';
+import { grey } from '@mui/material/colors';
 
 const ModelSelectorInstaller = (): React.JSX.Element => {
   const { setNextStepAvalible } = useContext(StepperContext)!;
 
   const [isInstalling, setIsInstalling] = useState(false);
+  const [isModelInstalled, setIsModelInstalled] = useState(true);
   const [selectedModel, setSelectedModel] = useState<string | null>(null);
 
   useEffect(() => {
@@ -51,91 +54,121 @@ const ModelSelectorInstaller = (): React.JSX.Element => {
           <MenuItem value={'large'}>large</MenuItem>
         </Select>
       </FormControl>
+      {/* 
+        {isModelInstalled
+          ?
+          <Alert
+            sx={{ bgcolor: 'transparent' }}
+            icon={<CheckIcon fontSize="inherit" />}
+            severity="success"
+          >
+            The model is installed.
+          </Alert>
+          :
+        } */}
 
       {selectedModel && (
         <>
-          <Box component={'p'} sx={{ marginTop: '1em' }}>
-            Model weight:{' '}
-            <Typography component={'span'} sx={{ color: 'text.secondary' }}>
-              2.05 GB
-            </Typography>
-          </Box>
-          <Box sx={{ marginTop: '.5em' }}>
-            {isInstalling ? (
-              <LinearProgressWithLabel value={23} />
-            ) : (
-              <Button
-                onClick={() => setIsInstalling(true)}
-                size="small"
-                variant="contained"
-                color="success"
-              >
-                Install
-              </Button>
-            )}
-          </Box>
-
-          <Box
-            sx={{
-              mt: '1em',
-              display: 'flex',
-              width: '100%',
-              justifyContent: 'end',
-              alignItems: 'center',
-              gap: 1.5
-            }}
-          >
-            <Box sx={{ flex: 2 }}>
-              <Typography component={'h3'} variant="h5">
-                Translation settings
-              </Typography>
-            </Box>
-            <FormControl sx={{ flex: 1 }}>
-              <InputLabel id="device-label" size="small">
-                Device
-              </InputLabel>
-              <Select
-                onChange={(e: SelectChangeEvent<string>) => {
-                  //setSelectedModel(e.target.value);
+          {isModelInstalled ? (
+            <>
+              <Box
+                sx={{
+                  mt: '1em',
+                  display: 'flex',
+                  width: '100%',
+                  justifyContent: 'end',
+                  alignItems: 'center',
+                  gap: 1.5
                 }}
-                labelId="device-label"
-                label="Device"
-                size="small"
               >
-                <MenuItem value={'cpu'}>CPU</MenuItem>
-                <MenuItem value={'cuda'}>GPU (CUDA)</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl sx={{ flex: 1 }}>
-              <InputLabel id="language-label" size="small">
-                Languages
-              </InputLabel>
-              <Select
-                onChange={(e: SelectChangeEvent<string>) => {
-                  //setSelectedModel(e.target.value);
-                }}
-                labelId="language-label"
-                label="Language"
-                size="small"
-              >
-                <MenuItem value={'auto'}>Auto</MenuItem>
-                <MenuItem value={'en'}>English</MenuItem>
-                <MenuItem value={'pl'}>Polish</MenuItem>
-                <MenuItem value={'ge'}>Germany</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-          <FormControl sx={{ display: 'flex', marginTop: '1em', width: '100%' }}>
-            <Typography component={'span'}>Beam size</Typography>
-            <Slider
-              aria-label="Beam size"
-              defaultValue={3}
-              valueLabelDisplay="auto"
-              marks
-              min={1}
-              max={10}
-            />
-          </FormControl>
+                <Box sx={{ flex: 2 }}>
+                  <Typography component={'h3'} variant="h5">
+                    Translation settings
+                  </Typography>
+                </Box>
+                <FormControl sx={{ flex: 1 }}>
+                  <InputLabel id="device-label" size="small">
+                    Device
+                  </InputLabel>
+                  <Select
+                    onChange={(e: SelectChangeEvent<string>) => {
+                      //setSelectedModel(e.target.value);
+                    }}
+                    labelId="device-label"
+                    label="Device"
+                    size="small"
+                  >
+                    <MenuItem value={'cpu'}>CPU</MenuItem>
+                    <MenuItem value={'cuda'}>GPU (CUDA)</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl sx={{ flex: 1 }}>
+                  <InputLabel id="language-label" size="small">
+                    Languages
+                  </InputLabel>
+                  <Select
+                    onChange={(e: SelectChangeEvent<string>) => {
+                      //setSelectedModel(e.target.value);
+                    }}
+                    labelId="language-label"
+                    label="Language"
+                    size="small"
+                  >
+                    <MenuItem value={'auto'}>Auto</MenuItem>
+                    <MenuItem value={'en'}>English</MenuItem>
+                    <MenuItem value={'pl'}>Polish</MenuItem>
+                    <MenuItem value={'ge'}>Germany</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+              <FormControl sx={{ display: 'flex', marginTop: '1em', width: '100%' }}>
+                <Typography
+                  component={'span'}
+                  sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
+                >
+                  Beam size
+                  <Tooltip
+                    title={
+                      'Beam size is the number that tells the model how many words to check. Bigger numbers can give better results but take more time.'
+                    }
+                  >
+                    <InfoIcon fontSize="small" />
+                  </Tooltip>
+                </Typography>
+                <Slider
+                  aria-label="Beam size"
+                  defaultValue={3}
+                  valueLabelDisplay="auto"
+                  marks
+                  min={1}
+                  max={10}
+                />
+              </FormControl>
+            </>
+          ) : (
+            <>
+              <Box component={'p'} sx={{ marginTop: '1em' }}>
+                Model weight:{' '}
+                <Typography component={'span'} sx={{ color: 'text.secondary' }}>
+                  2.05 GB
+                </Typography>
+              </Box>
+              <Box sx={{ marginTop: '.5em' }}>
+                {isInstalling ? (
+                  <LinearProgressWithLabel value={23} />
+                ) : (
+                  <Button
+                    onClick={() => setIsInstalling(true)}
+                    size="small"
+                    variant="contained"
+                    color="success"
+                  >
+                    Install
+                  </Button>
+                )}
+              </Box>
+            </>
+          )}
         </>
       )}
     </>
