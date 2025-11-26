@@ -3,6 +3,11 @@ import torch
 
 model_path = ""
 
+# USER OPTIONS FOR FRONT END:
+# - device
+# - language
+# - beam_size
+
 def audio_to_lrc(audio_path: str, output_path: str):
   device = "cuda" if torch.cuda.is_available() else "cpu"
   print("h")

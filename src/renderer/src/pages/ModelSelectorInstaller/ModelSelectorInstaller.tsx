@@ -64,6 +64,22 @@ const ModelSelectorInstaller = (): React.JSX.Element => {
               </Button>
             )}
           </Box>
+
+          <FormControl sx={{ marginTop: '1em', width: '100%' }}>
+            <InputLabel id="model-label">Language</InputLabel>
+            <Select
+              onChange={(e: SelectChangeEvent<string>) => {
+                //setSelectedModel(e.target.value);
+              }}
+              labelId="model-label"
+              label="Model"
+              disabled={isInstalling}
+            >
+              <MenuItem value={'small'}>small</MenuItem>
+              <MenuItem value={'medium'}>medium</MenuItem>
+              <MenuItem value={'large'}>large</MenuItem>
+            </Select>
+          </FormControl>
         </>
       )}
     </>
