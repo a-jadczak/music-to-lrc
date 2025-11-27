@@ -16,7 +16,7 @@ const FileTreeConfigurator = () => {
   const [includeSourceFiles, setIncludeSourceFiles] = useState(true);
 
   const setSelectedPath = async () => {
-    const dir = await window.electronAPI.openDirectory();
+    const dir = await window.api.openDirectory();
 
     if (dir.canceled) return;
 

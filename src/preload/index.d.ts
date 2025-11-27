@@ -3,6 +3,6 @@ import Language from 'src/types/Language';
 
 declare global {
   interface Window {
-    electronAPI: typeof import('./preload/index').electronAPI;
+    api: typeof import('./preload/index').api;
   }
 }

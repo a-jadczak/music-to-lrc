@@ -5,7 +5,7 @@ const useLanguages = () => {
   const [languages, setLanguages] = useState<Language[]>([]);
 
   useEffect(() => {
-    window.electronAPI
+    window.api
       .getLanguages()
       .then((res) => {
         setLanguages(res);

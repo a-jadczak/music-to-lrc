@@ -9,11 +9,11 @@ const api = {
 
 if (process.contextIsolated) {
   try {
-    contextBridge.exposeInMainWorld('electronAPI', api);
+    contextBridge.exposeInMainWorld('api', api);
   } catch (error) {
     console.error(error);
   }
 } else {
   //@ts-ignore
-  window.electronAPI = api;
+  window.api = api;
 }

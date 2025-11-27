@@ -12,7 +12,7 @@ const Dropzone = () => {
   const [dragging, setDragging] = useState(false);
 
   const uploadFiles = useCallback(async () => {
-    const result = await window.electronAPI.uploadFiles();
+    const result = await window.api.uploadFiles();
     if (!result.canceled) {
       addFiles(result.files);
     }
