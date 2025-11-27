@@ -16,7 +16,7 @@ const FileTreeConfigurator = () => {
   const [includeSourceFiles, setIncludeSourceFiles] = useState(true);
 
   const setSelectedPath = async () => {
-    const dir = await window.api.openDirectory();
+    const dir = await window.api.pickDirectory();
 
     if (dir.canceled) return;
 

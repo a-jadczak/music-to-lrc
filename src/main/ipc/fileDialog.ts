@@ -4,8 +4,8 @@ import path from 'path';
 import uniqid from 'uniqid';
 import AudioFile from '../../types/AudioFile';
 
-export const registerFileHandlers = () => {
-  ipcMain.handle('upload-files', async (e) => {
+export const registerFileDialogHandlers = () => {
+  ipcMain.handle('fileDialog:pickFiles', async (e) => {
     const window = BrowserWindow.fromWebContents(e.sender);
     if (!window) return { canceled: true, filePaths: [] };
 
@@ -30,7 +30,7 @@ export const registerFileHandlers = () => {
     return { canceled: false, files };
   });
 
-  ipcMain.handle('open-directory', async (e) => {
+  ipcMain.handle('fileDialog:pickDirectory', async (e) => {
     const window = BrowserWindow.fromWebContents(e.sender);
     if (!window) return { canceled: true, filePaths: [] };
 

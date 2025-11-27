@@ -7,12 +7,12 @@ import { useCallback, useContext, useState } from 'react';
 import AudioFile from 'src/types/AudioFile';
 import uniqid from 'uniqid';
 
-const Dropzone = () => {
+const Dropzone = (): React.JSX.Element => {
   const { addFiles } = useContext(FilesContext)!;
   const [dragging, setDragging] = useState(false);
 
   const uploadFiles = useCallback(async () => {
-    const result = await window.api.uploadFiles();
+    const result = await window.api.pickFiles();
     if (!result.canceled) {
       addFiles(result.files);
     }

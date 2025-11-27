@@ -1,7 +1,7 @@
-import { registerFileHandlers } from './browseFiles';
+import { registerFileDialogHandlers } from './fileDialog';
 import { registerAPIHandlers } from './api/endpoints/languages';
 
 export const registerIPCHandlers = () => {
-  registerFileHandlers();
+  registerFileDialogHandlers();
   registerAPIHandlers();
 };

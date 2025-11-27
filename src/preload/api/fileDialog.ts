@@ -11,6 +11,7 @@ interface OpenDialogResult {
   files: AudioFile[];
 }
 
-export const uploadFiles = (): Promise<OpenDialogResult> => ipcRenderer.invoke('upload-files');
-export const openDirectory = (): Promise<OpenDialogPathResult> =>
-  ipcRenderer.invoke('open-directory');
+export const pickFiles = (): Promise<OpenDialogResult> =>
+  ipcRenderer.invoke('fileDialog:pickFiles');
+export const pickDirectory = (): Promise<OpenDialogPathResult> =>
+  ipcRenderer.invoke('fileDialog:pickDirectory');

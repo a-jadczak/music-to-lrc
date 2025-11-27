@@ -1,5 +1,5 @@
 import { contextBridge } from 'electron';
-import * as FilesAPI from './api/files';
+import * as FilesAPI from './api/fileDialog';
 import * as LanguagesAPI from './api/languages';
 
 const api = {
