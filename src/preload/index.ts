@@ -1,19 +1,19 @@
-import { contextBridge, ipcRenderer } from 'electron';
+import { contextBridge } from 'electron';
+import * as FilesAPI from './api/files';
+import * as LanguagesAPI from './api/languages';
+
+const api = {
+  ...FilesAPI,
+  ...LanguagesAPI
+};
 
 if (process.contextIsolated) {
   try {
-    contextBridge.exposeInMainWorld('electronAPI', {
-      uploadFiles: () => ipcRenderer.invoke('upload-files'),
-      openDirectory: () => ipcRenderer.invoke('open-directory'),
-      getLanguages: () => ipcRenderer.invoke('get-languages')
-    });
+    contextBridge.exposeInMainWorld('electronAPI', api);
   } catch (error) {
     console.error(error);
   }
 } else {
   //@ts-ignore
-  window.electronAPI = {
-    uploadFiles: () => ipcRenderer.invoke('upload-files'),
-    openDirectory: () => ipcRenderer.invoke('open-directory')
-  };
+  window.electronAPI = api;
 }
