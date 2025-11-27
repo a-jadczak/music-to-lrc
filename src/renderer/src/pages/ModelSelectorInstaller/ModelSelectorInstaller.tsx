@@ -15,7 +15,7 @@ import { SelectChangeEvent } from '@mui/material';
 import StepperContext from '@renderer/contexts/StepperContext';
 import { isEmpty } from '@renderer/utils/stringUtils';
 import InfoIcon from '@mui/icons-material/Info';
-import { grey } from '@mui/material/colors';
+import useLanguages from '@renderer/hooks/useLanguages';
 
 const ModelSelectorInstaller = (): React.JSX.Element => {
   const { setNextStepAvalible } = useContext(StepperContext)!;
@@ -23,6 +23,8 @@ const ModelSelectorInstaller = (): React.JSX.Element => {
   const [isInstalling, setIsInstalling] = useState(false);
   const [isModelInstalled, setIsModelInstalled] = useState(true);
   const [selectedModel, setSelectedModel] = useState<string | null>(null);
+
+  const languages = useLanguages();
 
   useEffect(() => {
     setNextStepAvalible(!isEmpty(selectedModel) && !isInstalling);
@@ -54,18 +56,6 @@ const ModelSelectorInstaller = (): React.JSX.Element => {
           <MenuItem value={'large'}>large</MenuItem>
         </Select>
       </FormControl>
-      {/* 
-        {isModelInstalled
-          ?
-          <Alert
-            sx={{ bgcolor: 'transparent' }}
-            icon={<CheckIcon fontSize="inherit" />}
-            severity="success"
-          >
-            The model is installed.
-          </Alert>
-          :
-        } */}
 
       {selectedModel && (
         <>
@@ -115,9 +105,9 @@ const ModelSelectorInstaller = (): React.JSX.Element => {
                     size="small"
                   >
                     <MenuItem value={'auto'}>Auto</MenuItem>
-                    <MenuItem value={'en'}>English</MenuItem>
-                    <MenuItem value={'pl'}>Polish</MenuItem>
-                    <MenuItem value={'ge'}>Germany</MenuItem>
+                    {languages.map((e) => (
+                      <MenuItem value={Object.keys(e)[0]}>{e[Object.keys(e)[0]]}</MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </Box>

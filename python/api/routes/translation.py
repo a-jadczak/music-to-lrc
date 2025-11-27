@@ -9,5 +9,6 @@ model_instance = WhisperModel("base")
 @router.get("/supported-languages")
 def get_model_languages():
   languages = model_instance.supported_languages
-  languages_with_codes = [{c: code_to_name(c) } for c in languages]
+  languages_with_codes = [{c: code_to_name(c)} for c in languages if code_to_name(c)]
+
   return languages_with_codes

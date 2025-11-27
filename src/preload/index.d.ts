@@ -1,4 +1,5 @@
 import AudioFile from './../types/AudioFile';
+import Language from 'src/types/Language';
 
 declare global {
   interface Window {
@@ -19,4 +20,5 @@ interface OpenDialogResult {
 export interface ElectronAPI {
   uploadFiles: () => Promise<OpenDialogResult>;
   openDirectory: () => Promise<OpenDialogPathResult>;
+  getLanguages: () => Promise<Language[]>;
 }
