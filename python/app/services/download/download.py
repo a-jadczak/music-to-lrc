@@ -1,9 +1,9 @@
 import requests
 from huggingface_hub import hf_hub_url
-from constants.hf_repo import MODEL_FILE_NAME
-from helpers.path_helpers import get_model_dir
-from helpers.model_helpers import get_model_info, get_repo_id
-from utils.download_utils import bytes_to_megabytes, download_percent
+from app.constants.hf_repo import MODEL_FILE_NAME
+from app.helpers.path_helpers import get_model_dir
+from app.helpers.model_helpers import get_model_info, get_repo_id
+from app.utils.download_utils import bytes_to_megabytes, download_percent
 
 def push_to_end(list, name):
   """Pushes a specific element to the end of a list"""

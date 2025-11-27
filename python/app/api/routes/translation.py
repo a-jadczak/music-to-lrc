@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from api.routes.helpers.languages import code_to_name
+from app.api.routes.helpers.languages import code_to_name
 from faster_whisper import WhisperModel
 
 router = APIRouter(prefix="/translation")

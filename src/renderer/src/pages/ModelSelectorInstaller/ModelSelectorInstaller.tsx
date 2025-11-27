@@ -104,7 +104,9 @@ const ModelSelectorInstaller = (): React.JSX.Element => {
                     label="Language"
                     size="small"
                   >
-                    <MenuItem value={'auto'}>Auto</MenuItem>
+                    <MenuItem value={'auto'} defaultChecked>
+                      Auto
+                    </MenuItem>
                     {languages.map((e) => (
                       <MenuItem value={Object.keys(e)[0]}>{e[Object.keys(e)[0]]}</MenuItem>
                     ))}

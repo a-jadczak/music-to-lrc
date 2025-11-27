@@ -6,3 +6,4 @@ pyinstaller
 fastapi 
 uvicorn
 pycountry
+pytest

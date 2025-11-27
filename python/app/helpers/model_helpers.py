@@ -1,5 +1,5 @@
 from huggingface_hub import HfApi
-from constants.hf_repo import REPO, AUTHOR
+from app.constants.hf_repo import REPO, AUTHOR
 
 api = HfApi()
 

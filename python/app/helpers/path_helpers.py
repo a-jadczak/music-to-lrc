@@ -1,5 +1,5 @@
 from pathlib import Path
-from constants.hf_repo import CACHE_BASE, AUTHOR, MODEL_FILE_NAME
+from app.constants.hf_repo import CACHE_BASE, AUTHOR, MODEL_FILE_NAME
 
 def get_model_dir(model_name: str) -> Path:
   """Return the path to the temp snapshot folder for a given model."""
