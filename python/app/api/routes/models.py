@@ -12,9 +12,9 @@ def get_models():
 @router.get("/{model_name}/weight")
 def get_model_weight(model_name: str):
   model_weight = bytes_to_megabytes(get_model_total_weight(model_name))
-  return {"model": model_name, "weight": model_weight}
+  return model_weight
 
 @router.get("/{model_name}/is-installed")
 def is_model_installed(model_name: str):
   is_installed = model_is_installed(model_name)
-  return {"model": model_name, "installed": is_installed}
+  return is_installed
