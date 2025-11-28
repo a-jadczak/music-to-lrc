@@ -89,7 +89,9 @@ const ModelSelectorInstaller = (): React.JSX.Element => {
                     size="small"
                   >
                     <MenuItem value={'cpu'}>CPU</MenuItem>
-                    <MenuItem value={'cuda'}>GPU (CUDA)</MenuItem>
+                    <MenuItem disabled value={'cuda'}>
+                      GPU (CUDA)
+                    </MenuItem>
                   </Select>
                 </FormControl>
                 <FormControl sx={{ flex: 1 }}>

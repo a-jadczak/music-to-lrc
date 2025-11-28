@@ -2,7 +2,8 @@ from fastapi import FastAPI, WebSocket
 from pathlib import Path
 import asyncio
 from fastapi.middleware.cors import CORSMiddleware
-from app.api.routes import models, cuda, translation
+from app.api.routes import models, cuda
+from app.api.routes import transcription
 #from api.ws_routes import router as ws_router
 
 app = FastAPI()
@@ -21,5 +22,5 @@ async def root():
 
 
 app.include_router(models.router)
-app.include_router(translation.router)
+app.include_router(transcription.router)
 app.include_router(cuda.router)
