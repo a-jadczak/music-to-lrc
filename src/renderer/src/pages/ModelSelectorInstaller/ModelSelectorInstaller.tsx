@@ -1,33 +1,20 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Slider,
-  Tooltip,
-  Typography
-} from '@mui/material';
-import { useContext, useEffect, useState } from 'react';
-import LinearProgressWithLabel from '../../components/LinearProgressWithLabel/LinearProgressWithLabel';
-import { SelectChangeEvent } from '@mui/material';
+import { useContext, useEffect } from 'react';
 import StepperContext from '@renderer/contexts/StepperContext';
 import { isEmpty } from '@renderer/utils/stringUtils';
-import InfoIcon from '@mui/icons-material/Info';
+
 import useTranscribeSettings from '@renderer/hooks/useTranscribeSettings';
 import useModelData from '@renderer/hooks/useModelData';
+import ModelSelect from './ModelSelect';
+import ModelInstaller from './ModelInstaller';
+import ModelSettings from './ModelSettings';
 
 const ModelSelectorInstaller = (): React.JSX.Element => {
   const { setNextStepAvalible } = useContext(StepperContext)!;
 
-  const [isInstalling, setIsInstalling] = useState(false);
-  const [isModelInstalled, setIsModelInstalled] = useState(true);
-  const [selectedModel, setSelectedModel] = useState<string | null>(null);
-
   const { transcribeSettings, languages, isCudaAvailable, setTranscribeSettings } =
     useTranscribeSettings();
-  const { models } = useModelData();
+  const { models, installModel, isInstalling, weight, isModelInstalled, selectedModel, setModel } =
+    useModelData();
 
   useEffect(() => {
     setNextStepAvalible(!isEmpty(selectedModel) && !isInstalling);
@@ -35,139 +22,14 @@ const ModelSelectorInstaller = (): React.JSX.Element => {
 
   return (
     <>
-      <Typography component="h2" variant="h4">
-        Select Model
-      </Typography>
-      <Typography component="p" sx={{ color: 'text.secondary' }}>
-        A larger model size usually means that the translation will take more time to complete.
-        However, the benefit is that the results are generally more accurate. Bigger models can
-        analyze more details and understand the context better, which leads to higher-quality
-        translations.
-      </Typography>
-      <FormControl sx={{ marginTop: '1em', width: '100%' }}>
-        <InputLabel id="model-label">Model</InputLabel>
-        <Select
-          onChange={(e: SelectChangeEvent<string>) => {
-            setSelectedModel(e.target.value);
-          }}
-          labelId="model-label"
-          label="Model"
-          disabled={isInstalling}
-        >
-          {models?.map((e) => (
-            <MenuItem value={e}>{e}</MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <ModelSelect models={models} setModel={setModel} isInstalling={isInstalling} />
 
-      {selectedModel && (
-        <>
-          {isModelInstalled ? (
-            <>
-              <Box
-                sx={{
-                  mt: '1em',
-                  display: 'flex',
-                  width: '100%',
-                  justifyContent: 'end',
-                  alignItems: 'center',
-                  gap: 1.5
-                }}
-              >
-                <Box sx={{ flex: 2 }}>
-                  <Typography component={'h3'} variant="h5">
-                    Translation settings
-                  </Typography>
-                </Box>
-                <FormControl sx={{ flex: 1 }}>
-                  <InputLabel id="device-label" size="small">
-                    Device
-                  </InputLabel>
-                  <Select
-                    onChange={(e: SelectChangeEvent<string>) => {
-                      //setSelectedModel(e.target.value);
-                    }}
-                    labelId="device-label"
-                    label="Device"
-                    size="small"
-                  >
-                    <MenuItem value={'cpu'}>CPU</MenuItem>
-                    <MenuItem disabled={isCudaAvailable} value={'cuda'}>
-                      GPU (CUDA)
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-                <FormControl sx={{ flex: 1 }}>
-                  <InputLabel id="language-label" size="small">
-                    Languages
-                  </InputLabel>
-                  <Select
-                    onChange={(e: SelectChangeEvent<string>) => {
-                      //setSelectedModel(e.target.value);
-                    }}
-                    labelId="language-label"
-                    label="Language"
-                    size="small"
-                  >
-                    <MenuItem value={'auto'} defaultChecked>
-                      Auto
-                    </MenuItem>
-                    {languages.map((e) => (
-                      <MenuItem value={Object.keys(e)[0]}>{e[Object.keys(e)[0]]}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Box>
-              <FormControl sx={{ display: 'flex', marginTop: '1em', width: '100%' }}>
-                <Typography
-                  component={'span'}
-                  sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
-                >
-                  Beam size
-                  <Tooltip
-                    title={
-                      'Beam size is the number that tells the model how many words to check. Bigger numbers can give better results but take more time.'
-                    }
-                  >
-                    <InfoIcon fontSize="small" />
-                  </Tooltip>
-                </Typography>
-                <Slider
-                  aria-label="Beam size"
-                  defaultValue={3}
-                  valueLabelDisplay="auto"
-                  marks
-                  min={1}
-                  max={10}
-                />
-              </FormControl>
-            </>
-          ) : (
-            <>
-              <Box component={'p'} sx={{ marginTop: '1em' }}>
-                Model weight:{' '}
-                <Typography component={'span'} sx={{ color: 'text.secondary' }}>
-                  2.05 GB
-                </Typography>
-              </Box>
-              <Box sx={{ marginTop: '.5em' }}>
-                {isInstalling ? (
-                  <LinearProgressWithLabel value={23} />
-                ) : (
-                  <Button
-                    onClick={() => setIsInstalling(true)}
-                    size="small"
-                    variant="contained"
-                    color="success"
-                  >
-                    Install
-                  </Button>
-                )}
-              </Box>
-            </>
-          )}
-        </>
-      )}
+      {selectedModel &&
+        (isModelInstalled ? (
+          <ModelSettings isCudaAvailable={isCudaAvailable} languages={languages} />
+        ) : (
+          <ModelInstaller weight={weight} isInstalling={isInstalling} installModel={installModel} />
+        ))}
     </>
   );
 };
