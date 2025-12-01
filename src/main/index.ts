@@ -1,6 +1,6 @@
 import { app, BrowserWindow } from 'electron';
 import { electronApp, optimizer } from '@electron-toolkit/utils';
-import './ipc/api/endpoints/languages';
+import './ipc/api/endpoints/transcribeSettings';
 import { registerIPCHandlers } from './ipc';
 import { createMainWindow } from './windows/mainWindow';
 

@@ -1,6 +1,6 @@
 from faster_whisper import WhisperModel
-from app.schemas.transcription_config import TranscriptionConfig
-from app.services.audio_processing.helpers.time import calculate_timestamp
+from schemas.transcription_config import TranscriptionConfig
+from services.audio_processing.helpers.time import calculate_timestamp
 
 
 # USER DATA FROM FRONT END:

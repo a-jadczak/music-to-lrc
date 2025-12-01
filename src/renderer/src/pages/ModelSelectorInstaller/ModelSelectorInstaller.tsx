@@ -15,7 +15,8 @@ import { SelectChangeEvent } from '@mui/material';
 import StepperContext from '@renderer/contexts/StepperContext';
 import { isEmpty } from '@renderer/utils/stringUtils';
 import InfoIcon from '@mui/icons-material/Info';
-import useLanguages from '@renderer/hooks/useLanguages';
+import useTranscribeSettings from '@renderer/hooks/useTranscribeSettings';
+import useModelData from '@renderer/hooks/useModelData';
 
 const ModelSelectorInstaller = (): React.JSX.Element => {
   const { setNextStepAvalible } = useContext(StepperContext)!;
@@ -24,7 +25,9 @@ const ModelSelectorInstaller = (): React.JSX.Element => {
   const [isModelInstalled, setIsModelInstalled] = useState(true);
   const [selectedModel, setSelectedModel] = useState<string | null>(null);
 
-  const languages = useLanguages();
+  const { transcribeSettings, languages, isCudaAvailable, setTranscribeSettings } =
+    useTranscribeSettings();
+  const { models } = useModelData();
 
   useEffect(() => {
     setNextStepAvalible(!isEmpty(selectedModel) && !isInstalling);
@@ -51,9 +54,9 @@ const ModelSelectorInstaller = (): React.JSX.Element => {
           label="Model"
           disabled={isInstalling}
         >
-          <MenuItem value={'small'}>small</MenuItem>
-          <MenuItem value={'medium'}>medium</MenuItem>
-          <MenuItem value={'large'}>large</MenuItem>
+          {models?.map((e) => (
+            <MenuItem value={e}>{e}</MenuItem>
+          ))}
         </Select>
       </FormControl>
 
@@ -89,7 +92,7 @@ const ModelSelectorInstaller = (): React.JSX.Element => {
                     size="small"
                   >
                     <MenuItem value={'cpu'}>CPU</MenuItem>
-                    <MenuItem disabled value={'cuda'}>
+                    <MenuItem disabled={isCudaAvailable} value={'cuda'}>
                       GPU (CUDA)
                     </MenuItem>
                   </Select>

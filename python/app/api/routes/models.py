@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from app.utils.download_utils import bytes_to_megabytes
-from app.services.model_info.model_info import get_models_name, get_model_total_weight, is_model_installed as model_is_installed
+from utils.download_utils import bytes_to_megabytes
+from services.model_info.model_info import get_models_name, get_model_total_weight, is_model_installed as model_is_installed
 
 router = APIRouter(prefix="/models")
 

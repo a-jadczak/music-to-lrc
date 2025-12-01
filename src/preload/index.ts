@@ -1,10 +1,12 @@
 import { contextBridge } from 'electron';
 import * as FilesAPI from './api/fileDialog';
-import * as LanguagesAPI from './api/languages';
+import * as TranscribeSettingsAPI from './api/transcribeSettings';
+import * as ModelAPI from './api/model';
 
 const api = {
   ...FilesAPI,
-  ...LanguagesAPI
+  ...TranscribeSettingsAPI,
+  ...ModelAPI
 };
 
 if (process.contextIsolated) {
