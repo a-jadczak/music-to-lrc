@@ -12,8 +12,8 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window);
   });
 
-  registerIPCHandlers();
-  createMainWindow();
+  const window = createMainWindow();
+  registerIPCHandlers(window);
 
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createMainWindow();

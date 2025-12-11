@@ -10,8 +10,13 @@ import {
   Typography
 } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
+import { useState } from 'react';
 
 const ModelSettings = ({ isCudaAvailable, languages }) => {
+  const [language, setLanguage] = useState<string>();
+  const [device, setDevice] = useState<string>();
+  const [beamSize, setBeamSize] = useState<number>();
+
   return (
     <>
       <Box
@@ -35,7 +40,7 @@ const ModelSettings = ({ isCudaAvailable, languages }) => {
           </InputLabel>
           <Select
             onChange={(e: SelectChangeEvent<string>) => {
-              //setSelectedModel(e.target.value);
+              setDevice(e.target.value);
             }}
             labelId="device-label"
             label="Device"
@@ -53,7 +58,7 @@ const ModelSettings = ({ isCudaAvailable, languages }) => {
           </InputLabel>
           <Select
             onChange={(e: SelectChangeEvent<string>) => {
-              //setSelectedModel(e.target.value);
+              setLanguage(e.target.value);
             }}
             labelId="language-label"
             label="Language"
@@ -81,7 +86,10 @@ const ModelSettings = ({ isCudaAvailable, languages }) => {
         </Typography>
         <Slider
           aria-label="Beam size"
-          defaultValue={3}
+          defaultValue={beamSize}
+          onChange={(_event, value) => {
+            setBeamSize(value);
+          }}
           valueLabelDisplay="auto"
           marks
           min={1}

@@ -8,6 +8,8 @@ const useModelData = () => {
   const [weight, setWeight] = useState<number>();
   const [isModelInstalled, setIsModelInstalled] = useState<boolean>();
 
+  const [downloadProgress, setDownloadProgress] = useState<number>(0);
+
   useEffect(() => {
     window.api
       .getModels()
@@ -24,16 +26,40 @@ const useModelData = () => {
     window.api.getIsModelInstalled(modelName).then((v) => setIsModelInstalled(v));
   };
 
-  // Pseudo code
   const installModel = () => {
     setIsInstalling(true);
-    setTimeout(() => {
-      setIsInstalling(false);
-      setIsModelInstalled(true);
-    }, 2000);
+    window.ws.connect('ws://localhost:8000/ws/download/tiny');
+
+    window.ws.onMessage((data) => {
+      const parsed = JSON.parse(data);
+      if (parsed.status === 'progress') {
+        console.log(parsed);
+        setDownloadProgress(parsed.percent);
+      }
+      if (parsed.status === 'complete') {
+        console.log('process completed');
+        setIsInstalling(false);
+      }
+    });
+
+    window.ws.onStatus((status) => console.log('WS Status:', status));
+    window.ws.onError((err) => console.error('WS Error:', err));
   };
 
-  return { models, weight, isModelInstalled, isInstalling, setModel, selectedModel, installModel };
+  useEffect(() => {
+    if (isInstalling) console.log('isInstalling:', isInstalling);
+  }, [isInstalling]);
+
+  return {
+    models,
+    weight,
+    isModelInstalled,
+    isInstalling,
+    downloadProgress,
+    setModel,
+    selectedModel,
+    installModel
+  };
 };
 
 export default useModelData;

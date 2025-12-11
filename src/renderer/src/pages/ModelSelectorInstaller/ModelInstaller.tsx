@@ -1,13 +1,27 @@
 import { Box, Button, Typography } from '@mui/material';
 import LinearProgressWithLabel from '@renderer/components/LinearProgressWithLabel/LinearProgressWithLabel';
+import { useEffect } from 'react';
 
 interface ModelInstallerProps {
   weight: number | undefined;
   isInstalling: boolean;
+  downloadProgress: number;
   installModel: () => void;
 }
 
-const ModelInstaller = ({ weight, isInstalling, installModel }: ModelInstallerProps) => {
+const ModelInstaller = ({
+  weight,
+  downloadProgress,
+  isInstalling,
+  installModel
+}: ModelInstallerProps) => {
+  useEffect(() => {
+    if (isInstalling) console.log(isInstalling);
+    else console.log('jakis blad');
+  }, [isInstalling]);
+
+  console.log('Czy się instaulje?', isInstalling);
+
   return (
     <>
       <Box component={'p'} sx={{ marginTop: '1em' }}>
@@ -18,7 +32,7 @@ const ModelInstaller = ({ weight, isInstalling, installModel }: ModelInstallerPr
       </Box>
       <Box sx={{ marginTop: '.5em' }}>
         {isInstalling ? (
-          <LinearProgressWithLabel value={23} />
+          <LinearProgressWithLabel value={downloadProgress} />
         ) : (
           <Button onClick={installModel} size="small" variant="contained" color="success">
             Install

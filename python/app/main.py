@@ -4,6 +4,7 @@ import asyncio
 from fastapi.middleware.cors import CORSMiddleware
 from api.routes import models, cuda
 from api.routes import transcription
+from api.websocket import ws_routes
 #from api.ws_routes import router as ws_router
 
 app = FastAPI()
@@ -24,3 +25,4 @@ async def root():
 app.include_router(models.router)
 app.include_router(transcription.router)
 app.include_router(cuda.router)
+app.include_router(ws_routes.router)

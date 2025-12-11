@@ -4,5 +4,6 @@ import Language from 'src/types/Language';
 declare global {
   interface Window {
     api: typeof import('./preload/index').api;
+    ws: typeof import('./preload/index').ws;
   }
 }
