@@ -41,7 +41,7 @@ async def download_model(f, download_progress, snapshot_dir, repo_id, total_size
     percent = download_percent(download_progress, total_size)
 
     print(f"\rDownloading {f.rfilename}: {percent:.2f}% ({downloaded_megabytes:.2f}/{total_megabytes:.2f} MB)", end="")
-    await websocket.send_text(json.dumps({"status": "progress", "percent": percent}))
+    await websocket.send_text(json.dumps({"status": "progress", "downloaded": round(downloaded_megabytes, 2) , "percent": percent}))
 
   return download_progress
 

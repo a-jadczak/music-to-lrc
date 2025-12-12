@@ -37,7 +37,7 @@ const ModelSelectorInstaller = (): React.JSX.Element => {
             weight={`${selectedModel.weight} ${selectedModel.unit}`}
             isInstalling={isInstalling}
             installModel={installModel}
-            downloadProgress={downloadProgress}
+            downloadProgress={downloadProgress!}
           />
         ))}
     </>

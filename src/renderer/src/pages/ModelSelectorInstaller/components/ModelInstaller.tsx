@@ -3,9 +3,9 @@ import LinearProgressWithLabel from '@renderer/components/LinearProgressWithLabe
 import { useEffect } from 'react';
 
 interface ModelInstallerProps {
+  downloadProgress: DownloadProgress;
   weight: string | undefined;
   isInstalling: boolean;
-  downloadProgress: number;
   installModel: () => void;
 }
 
@@ -23,14 +23,22 @@ const ModelInstaller = ({
   return (
     <>
       <Box component={'p'} sx={{ marginTop: '1em' }}>
-        Model weight:{' '}
-        <Typography component={'span'} sx={{ color: 'text.secondary' }}>
-          {weight}
-        </Typography>
+        {isInstalling ? (
+          <>
+            Downloading ({downloadProgress.downloaded} MB / {weight})
+          </>
+        ) : (
+          <>
+            Model weight:{' '}
+            <Typography component={'span'} sx={{ color: 'text.secondary' }}>
+              {weight}
+            </Typography>
+          </>
+        )}
       </Box>
       <Box sx={{ marginTop: '.5em' }}>
         {isInstalling ? (
-          <LinearProgressWithLabel value={downloadProgress} />
+          <LinearProgressWithLabel value={downloadProgress.percent} />
         ) : (
           <Button onClick={installModel} size="small" variant="contained" color="success">
             Install

@@ -8,7 +8,10 @@ const useModelData = () => {
   const [isInstalling, setIsInstalling] = useState<boolean>(false);
   const [isModelInstalled, setIsModelInstalled] = useState<boolean>();
 
-  const [downloadProgress, setDownloadProgress] = useState<number>(0);
+  const [downloadProgress, setDownloadProgress] = useState<DownloadProgress>({
+    downloaded: 0,
+    percent: 0
+  });
 
   useEffect(() => {
     window.api
@@ -33,11 +36,12 @@ const useModelData = () => {
       const parsed = JSON.parse(data);
       if (parsed.status === 'progress') {
         console.log(parsed);
-        setDownloadProgress(parsed.percent);
+        setDownloadProgress({ ...parsed });
       } else if (parsed.status === 'complete') {
         console.log('process completed');
         setIsInstalling(false);
         setIsModelInstalled(true);
+        setDownloadProgress({ downloaded: 0, percent: 0 });
       }
     });
 
