@@ -3,7 +3,7 @@ from fastapi import APIRouter
 from api.routes.helpers.languages import code_to_name
 from faster_whisper import WhisperModel
 from schemas.transcription_config import TranscriptionConfig
-from services.audio_processing.transcriptor import audio_to_lrc
+from services.transcriptor.transcriptor import audio_to_lrc
 
 router = APIRouter(prefix="/transcription")
 

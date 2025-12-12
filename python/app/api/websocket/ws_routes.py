@@ -7,7 +7,6 @@ router = APIRouter(prefix="/ws")
 @router.websocket("/download/{model_name}")
 async def ws_download(websocket: WebSocket, model_name: str):
   await websocket.accept()
-
   await websocket.send_text(json.dumps({"status":"start"}))
 
   try:

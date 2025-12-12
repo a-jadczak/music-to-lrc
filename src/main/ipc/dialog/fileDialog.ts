@@ -2,7 +2,7 @@ import { BrowserWindow, dialog, ipcMain } from 'electron';
 import fs from 'fs';
 import path from 'path';
 import uniqid from 'uniqid';
-import AudioFile from '../../types/AudioFile';
+import AudioFile from '../../../types/AudioFile';
 
 export const registerFileDialogHandlers = () => {
   ipcMain.handle('fileDialog:pickFiles', async (e) => {

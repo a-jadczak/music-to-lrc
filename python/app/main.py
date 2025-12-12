@@ -1,11 +1,8 @@
 from fastapi import FastAPI, WebSocket
 from pathlib import Path
-import asyncio
 from fastapi.middleware.cors import CORSMiddleware
-from api.routes import models, cuda
-from api.routes import transcription
+from api.routes import models, cuda, transcription
 from api.websocket import ws_routes
-#from api.ws_routes import router as ws_router
 
 app = FastAPI()
 

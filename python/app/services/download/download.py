@@ -14,6 +14,13 @@ def push_to_end(list, name):
 
   return other_files + model_file
 
+def save_files(full_path: str, resp):
+  with open(full_path, "wb") as fd:
+    for chunk in resp.iter_content(chunk_size=1024 * 1024):
+      if chunk:
+        fd.write(chunk)
+        yield chunk
+
 async def download_model(f, download_progress, snapshot_dir, repo_id, total_size, websocket: WebSocket):
   full_path = snapshot_dir / f.rfilename
   full_path.parent.mkdir(parents=True, exist_ok=True)
@@ -37,13 +44,6 @@ async def download_model(f, download_progress, snapshot_dir, repo_id, total_size
     await websocket.send_text(json.dumps({"status": "progress", "percent": percent}))
 
   return download_progress
-
-def save_files(full_path: str, resp):
-  with open(full_path, "wb") as fd:
-    for chunk in resp.iter_content(chunk_size=1024 * 1024):
-      if chunk:
-        fd.write(chunk)
-        yield chunk
 
 async def download_hf_repo_to_cache(model_name, websocket: WebSocket):
   info = get_model_info(model_name)

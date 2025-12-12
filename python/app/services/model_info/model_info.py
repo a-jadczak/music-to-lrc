@@ -1,17 +1,22 @@
 from constants.hf_repo import REPO, MODEL_FILE_NAME
+from utils.download_utils import bytes_to_megabytes
 from utils.sha import sha256_file
 from helpers.path_helpers import get_model_path
 from helpers.model_helpers import get_model_info, get_models
 
-
-def get_models_name():
+def get_models_data():
   faster_whisper_models = get_models()
   models = [m.modelId for m in faster_whisper_models if "faster-whisper" in m.modelId]
+  model_data = []
 
   for i in range(len(models)):
-    models[i] = models[i].removeprefix(REPO)
+    model_name = models[i].removeprefix(REPO)
+    weight = bytes_to_megabytes(get_model_total_weight(model_name))
+    model_data.append({ "name": model_name, "weight": round(weight, 1), "unit": "MB" })
 
-  return models
+  model_data.sort(key=lambda model: model["weight"], reverse=True)
+
+  return model_data
 
 def get_model_total_weight(model_name):
   info = get_model_info(model_name)

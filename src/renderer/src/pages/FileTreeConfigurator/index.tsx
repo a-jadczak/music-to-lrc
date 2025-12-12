@@ -1,12 +1,12 @@
 import { Box, Typography } from '@mui/material';
-import './FileTreeConfigurator.css';
+import './styles.css';
 import { useContext, useEffect, useState } from 'react';
 import { FilesContext } from '@renderer/contexts/FilesContext';
 import { isEmpty } from '@renderer/utils/stringUtils';
 import StepperContext from '@renderer/contexts/StepperContext';
-import DirectoryInput from './DirectoryInput';
-import FileItem from './FileItem';
-import OutputOptions from './OutputOptions';
+import DirectoryInput from './components/DirectoryInput';
+import FileItem from './components/FileItem';
+import OutputOptions from './components/OutputOptions';
 
 const FileTreeConfigurator = () => {
   const { files, outputPath, setOutputPath } = useContext(FilesContext)!;

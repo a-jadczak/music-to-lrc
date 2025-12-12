@@ -6,14 +6,15 @@ import {
   SelectChangeEvent,
   Typography
 } from '@mui/material';
+import ModelData from '@renderer/types/ModelData';
 
 interface ModelSelectProps {
-  models: string[] | undefined;
+  modelsData: ModelData[] | undefined;
   setModel: (value: string) => void;
   isInstalling: boolean;
 }
 
-const ModelSelect = ({ models, setModel, isInstalling }: ModelSelectProps) => {
+const ModelSelect = ({ modelsData, setModel, isInstalling }: ModelSelectProps) => {
   return (
     <>
       <Typography component="h2" variant="h4">
@@ -35,8 +36,8 @@ const ModelSelect = ({ models, setModel, isInstalling }: ModelSelectProps) => {
           label="Model"
           disabled={isInstalling}
         >
-          {models?.map((e) => (
-            <MenuItem value={e}>{e}</MenuItem>
+          {modelsData?.map((model) => (
+            <MenuItem value={model.name}>{model.name}</MenuItem>
           ))}
         </Select>
       </FormControl>

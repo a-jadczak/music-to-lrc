@@ -1,13 +1,14 @@
 from fastapi import APIRouter
 from utils.download_utils import bytes_to_megabytes
-from services.model_info.model_info import get_models_name, get_model_total_weight, is_model_installed as model_is_installed
+from services.model_info.model_info import get_models_data, get_model_total_weight, is_model_installed as model_is_installed
 
 router = APIRouter(prefix="/models")
 
 @router.get("/")
 def get_models():
-  models = get_models_name()
+  models = get_models_data()
   return models
+
 
 @router.get("/{model_name}/weight")
 def get_model_weight(model_name: str):

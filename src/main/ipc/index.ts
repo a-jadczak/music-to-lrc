@@ -1,4 +1,4 @@
-import { registerFileDialogHandlers } from './fileDialog';
+import { registerFileDialogHandlers } from './dialog/fileDialog';
 import { registerAPIHandlers } from './api/endpoints/transcribeSettings';
 import { registerModelAPIHandlers } from './api/endpoints/modelSettings';
 import { registerDownloadWS } from './ws/download';

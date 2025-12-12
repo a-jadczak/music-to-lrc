@@ -3,7 +3,7 @@ import LinearProgressWithLabel from '@renderer/components/LinearProgressWithLabe
 import { useEffect } from 'react';
 
 interface ModelInstallerProps {
-  weight: number | undefined;
+  weight: string | undefined;
   isInstalling: boolean;
   downloadProgress: number;
   installModel: () => void;
@@ -17,10 +17,8 @@ const ModelInstaller = ({
 }: ModelInstallerProps) => {
   useEffect(() => {
     if (isInstalling) console.log(isInstalling);
-    else console.log('jakis blad');
+    else console.log('err');
   }, [isInstalling]);
-
-  console.log('Czy się instaulje?', isInstalling);
 
   return (
     <>

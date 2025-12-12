@@ -1,5 +1,5 @@
 import { Box, CircularProgress, LinearProgress, Stack, Typography } from '@mui/material';
-import './TranslationProgress.css';
+import './styles.css';
 import { useContext, useEffect, useState } from 'react';
 import StepperContext from '@renderer/contexts/StepperContext';
 

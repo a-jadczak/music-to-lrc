@@ -4,7 +4,7 @@ import AudioFileIcon from '@mui/icons-material/AudioFile';
 import { useContext, useEffect } from 'react';
 import { FilesContext } from '@renderer/contexts/FilesContext';
 import StepperContext from '@renderer/contexts/StepperContext';
-import './UploadPage.css';
+import './styles.css';
 
 const UploadPage = (): React.JSX.Element => {
   const { files, deleteFile } = useContext(FilesContext)!;

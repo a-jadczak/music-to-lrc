@@ -1,11 +1,11 @@
+import ModelData from '@renderer/types/ModelData';
 import { useEffect, useState } from 'react';
 
 const useModelData = () => {
-  const [models, setModels] = useState<string[]>();
-  const [selectedModel, setSelectedModel] = useState<string>('');
-  const [isInstalling, setIsInstalling] = useState<boolean>(false);
+  const [modelsData, setModelsData] = useState<ModelData[]>();
+  const [selectedModel, setSelectedModel] = useState<ModelData | null>();
 
-  const [weight, setWeight] = useState<number>();
+  const [isInstalling, setIsInstalling] = useState<boolean>(false);
   const [isModelInstalled, setIsModelInstalled] = useState<boolean>();
 
   const [downloadProgress, setDownloadProgress] = useState<number>(0);
@@ -14,31 +14,30 @@ const useModelData = () => {
     window.api
       .getModels()
       .then((models) => {
-        setModels(models);
+        setModelsData(models);
       })
       .catch((err) => console.error('Error:', err));
   }, []);
 
   const setModel = (modelName: string) => {
-    setSelectedModel(modelName);
+    setSelectedModel(modelsData?.find((model) => model.name === modelName));
 
-    window.api.getModelWeight(modelName).then((v) => setWeight(v));
-    window.api.getIsModelInstalled(modelName).then((v) => setIsModelInstalled(v));
+    window.api.getIsModelInstalled(modelName).then((value) => setIsModelInstalled(value));
   };
 
   const installModel = () => {
     setIsInstalling(true);
-    window.ws.connect('ws://localhost:8000/ws/download/tiny');
+    window.ws.connect(`ws://localhost:8000/ws/download/${selectedModel?.name}`);
 
-    window.ws.onMessage((data) => {
+    window.ws.onMessage((data: string) => {
       const parsed = JSON.parse(data);
       if (parsed.status === 'progress') {
         console.log(parsed);
         setDownloadProgress(parsed.percent);
-      }
-      if (parsed.status === 'complete') {
+      } else if (parsed.status === 'complete') {
         console.log('process completed');
         setIsInstalling(false);
+        setIsModelInstalled(true);
       }
     });
 
@@ -46,13 +45,8 @@ const useModelData = () => {
     window.ws.onError((err) => console.error('WS Error:', err));
   };
 
-  useEffect(() => {
-    if (isInstalling) console.log('isInstalling:', isInstalling);
-  }, [isInstalling]);
-
   return {
-    models,
-    weight,
+    modelsData,
     isModelInstalled,
     isInstalling,
     downloadProgress,
