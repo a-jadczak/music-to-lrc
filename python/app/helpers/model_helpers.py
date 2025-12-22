@@ -1,5 +1,5 @@
 from huggingface_hub import HfApi
-from constants.hf_repo import REPO, AUTHOR
+from app.constants.hf_repo import REPO, AUTHOR
 
 api = HfApi()
 
@@ -12,4 +12,5 @@ def get_model_info(model_name):
   return api.model_info(repo_id, files_metadata=True)
 
 def get_models():
+  print(api.list_models(author=AUTHOR))
   return api.list_models(author=AUTHOR)

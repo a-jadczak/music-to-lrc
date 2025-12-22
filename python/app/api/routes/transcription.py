@@ -1,9 +1,9 @@
 from typing import List
 from fastapi import APIRouter
-from api.routes.helpers.languages import code_to_name
+from app.api.routes.helpers.languages import code_to_name
 from faster_whisper import WhisperModel
-from schemas.transcription_config import TranscriptionConfig
-from services.transcriptor.transcriptor import audio_to_lrc
+from app.schemas.transcription_config import TranscriptionConfig
+from app.services.transcriptor.transcriptor import audio_to_lrc
 
 router = APIRouter(prefix="/transcription")
 

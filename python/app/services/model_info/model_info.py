@@ -1,8 +1,9 @@
-from constants.hf_repo import REPO, MODEL_FILE_NAME
-from utils.download_utils import bytes_to_megabytes
-from utils.sha import sha256_file
-from helpers.path_helpers import get_model_path
-from helpers.model_helpers import get_model_info, get_models
+from app.constants.hf_repo import REPO, MODEL_FILE_NAME
+from app.utils.download_utils import bytes_to_megabytes
+from app.utils.sha import sha256_file
+from app.helpers.path_helpers import get_model_path
+from app.helpers.model_helpers import get_model_info, get_models
+
 
 def get_models_data():
   faster_whisper_models = get_models()
@@ -26,6 +27,9 @@ def get_model_total_weight(model_name):
 
 def get_model_sha256(model_name):
   info = get_model_info(model_name)
+  if info is None:
+    return None
+
   for file in info.siblings:
     if file.rfilename == MODEL_FILE_NAME:
       return file.lfs.sha256 
@@ -37,7 +41,7 @@ def is_model_installed(model_name):
 
   if not cache_path.exists():
     return False
-  
+
   excepted_model_sha = get_model_sha256(model_name)
   saved_model_sha = sha256_file(cache_path)
   

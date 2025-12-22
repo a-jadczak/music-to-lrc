@@ -1,6 +1,6 @@
 import json
 from fastapi import APIRouter, WebSocket
-from services.download.download import download_hf_repo_to_cache
+from app.services.download.download import download_hf_repo_to_cache
 
 router = APIRouter(prefix="/ws")
 

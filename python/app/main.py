@@ -1,8 +1,9 @@
-from fastapi import FastAPI, WebSocket
+from fastapi import FastAPI
 from pathlib import Path
 from fastapi.middleware.cors import CORSMiddleware
-from api.routes import models, cuda, transcription
-from api.websocket import ws_routes
+from app.api.routes import models, cuda, transcription
+from app.api.websocket import ws_routes
+
 
 app = FastAPI()
 
@@ -17,7 +18,6 @@ app.add_middleware(
 @app.get("/")
 async def root():
   return {"message": "Backend is running!"}
-
 
 app.include_router(models.router)
 app.include_router(transcription.router)

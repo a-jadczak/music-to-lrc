@@ -5,6 +5,7 @@ import useModelData from '@renderer/hooks/useModelData';
 import ModelSelect from './components/ModelSelect';
 import ModelInstaller from './components/ModelInstaller';
 import ModelSettings from './components/ModelSettings';
+import { CircularProgress } from '@mui/material';
 
 const ModelSelectorInstaller = (): React.JSX.Element => {
   const { setNextStepAvalible } = useContext(StepperContext)!;
@@ -27,10 +28,14 @@ const ModelSelectorInstaller = (): React.JSX.Element => {
 
   return (
     <>
+      {/* TODO: Make default array instead of map. for rendering */}
       <ModelSelect modelsData={modelsData} setModel={setModel} isInstalling={isInstalling} />
 
-      {selectedModel &&
-        (isModelInstalled ? (
+      {isModelInstalled === 'awaiting' ? (
+        <CircularProgress />
+      ) : (
+        selectedModel &&
+        (isModelInstalled === 'yes' ? (
           <ModelSettings isCudaAvailable={isCudaAvailable} languages={languages} />
         ) : (
           <ModelInstaller
@@ -39,7 +44,8 @@ const ModelSelectorInstaller = (): React.JSX.Element => {
             installModel={installModel}
             downloadProgress={downloadProgress!}
           />
-        ))}
+        ))
+      )}
     </>
   );
 };

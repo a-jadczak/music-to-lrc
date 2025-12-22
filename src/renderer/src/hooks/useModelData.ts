@@ -1,12 +1,14 @@
 import ModelData from '@renderer/types/ModelData';
 import { useEffect, useState } from 'react';
 
+type ModelInstalled = 'yes' | 'no' | 'awaiting';
+
 const useModelData = () => {
   const [modelsData, setModelsData] = useState<ModelData[]>();
   const [selectedModel, setSelectedModel] = useState<ModelData | null>();
 
   const [isInstalling, setIsInstalling] = useState<boolean>(false);
-  const [isModelInstalled, setIsModelInstalled] = useState<boolean>();
+  const [isModelInstalled, setIsModelInstalled] = useState<ModelInstalled>();
 
   const [downloadProgress, setDownloadProgress] = useState<DownloadProgress>({
     downloaded: 0,
@@ -25,7 +27,10 @@ const useModelData = () => {
   const setModel = (modelName: string) => {
     setSelectedModel(modelsData?.find((model) => model.name === modelName));
 
-    window.api.getIsModelInstalled(modelName).then((value) => setIsModelInstalled(value));
+    setIsModelInstalled('awaiting');
+    window.api
+      .getIsModelInstalled(modelName)
+      .then((value) => setIsModelInstalled(value ? 'yes' : 'no'));
   };
 
   const installModel = () => {
@@ -38,15 +43,19 @@ const useModelData = () => {
         console.log(parsed);
         setDownloadProgress({ ...parsed });
       } else if (parsed.status === 'complete') {
-        console.log('process completed');
-        setIsInstalling(false);
-        setIsModelInstalled(true);
-        setDownloadProgress({ downloaded: 0, percent: 0 });
+        onInstalled();
       }
     });
 
     window.ws.onStatus((status) => console.log('WS Status:', status));
     window.ws.onError((err) => console.error('WS Error:', err));
+  };
+
+  const onInstalled = () => {
+    console.log('process completed');
+    setIsInstalling(false);
+    setIsModelInstalled('yes');
+    setDownloadProgress({ downloaded: 0, percent: 0 });
   };
 
   return {

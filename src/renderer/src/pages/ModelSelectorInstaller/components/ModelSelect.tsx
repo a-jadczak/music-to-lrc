@@ -37,7 +37,9 @@ const ModelSelect = ({ modelsData, setModel, isInstalling }: ModelSelectProps) =
           disabled={isInstalling}
         >
           {modelsData?.map((model) => (
-            <MenuItem value={model.name}>{model.name}</MenuItem>
+            <MenuItem key={model.name} value={model.name}>
+              {model.name}
+            </MenuItem>
           ))}
         </Select>
       </FormControl>
